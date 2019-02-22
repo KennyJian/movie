@@ -1,0 +1,148 @@
+/*! minireset.css v0.0.3 | MIT License | github.com/jgthms/minireset.css */
+html,
+body,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+blockquote,
+figure,
+fieldset,
+legend,
+textarea,
+pre,
+iframe,
+hr,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 100%;
+  font-weight: normal;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  margin: 0;
+}
+
+html,
+body {
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+img,
+embed,
+iframe,
+object,
+audio,
+video {
+  height: auto;
+  max-width: 100%;
+}
+
+iframe {
+  border: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+td,
+th {
+  padding: 0;
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+}
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px white inset;
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+i{
+  font-style: normal;
+}
+img{
+  display: inline-block;
+}
+/* 分页样式 */
+ .el-pagination{
+  margin:20px auto;
+  text-align: center;
+}
+ .el-pagination button{
+  padding:0 19px;
+}
+ .btn-prev{
+  margin-right:10px!important;
+}
+ .btn-prev,
+ .btn-next {
+  width: 80px!important;
+  height: 30px!important;
+  background-color: #fff;
+  border-radius: 2px;
+  border: 1px solid rgba(221, 221, 221, 1)!important;
+  color: #666;
+}
+ .el-pager li {
+  width: 40px!important;
+  height: 30px!important;
+  background: #fff;
+  margin-right: 10px!important;
+  border-radius: 2px;
+  border: 1px solid rgba(221, 221, 221, 1)!important;
+  color: #666;
+}
+ .el-pager li:not(.disabled).active {
+  background-color: #ed6c00;
+  color: #fff;
+  border: 0!important;
+  padding-top: 1px;
+}
+.el-pager .more:before{
+  content:"\E646"!important;
+}
+.el-popper[x-placement^=bottom] .popper__arrow:after,.el-popper[x-placement^=top] .popper__arrow:after{
+  content:''!important;
+}
