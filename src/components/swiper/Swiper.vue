@@ -3,7 +3,7 @@
     <swiper ref="myBanner" :options="swiperOption" v-if="imgList.length > 0">
       <swiper-slide v-for="(item, index) in imgList" :key="index">
         <div class="img-box" @click="doJump(item.jump_type, item.h_url)">
-          <img :src="item.img_path" alt="banner图" :key="new Date().getTime()+'_'+item.img_path">
+          <img :src="item.bannerAddress" alt="banner图" :key="new Date().getTime()+'_'+item.bannerAddress">
         </div>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
@@ -92,7 +92,7 @@ export default {
   height: 100%;
   img {
     width: 100%;
-    height: 100%;
+    height: 380px;
   }
 }
 </style>

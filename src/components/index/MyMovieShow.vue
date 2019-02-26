@@ -3,18 +3,18 @@
     <!-- 正在热映 -->
     <div v-if="type" class="content_item">
       <div class="item_head hot">
-        <span class="label">正在热映（9部）</span>
+        <span class="label">正在热映（{{movielist.filmNum}}部）</span>
         <span class="all">
           <a href>全部</a>
         </span>
       </div>
       <div class="item_list">
-        <div class="movie_list" v-for="(item, index) of movielist" :key="index">
+        <div class="movie_list" v-for="(item, index) of movielist.filmInfoList" :key="index">
           <div class="list_head">
-            <img :src="item.img" alt="影片海报">
+            <img :src="item.imgAddress" :alt="item.filmName">
             <div class="message">
-              <span class="movie_name">{{item.name}}</span>
-              <span class="score">{{item.score}}</span>
+              <span class="movie_name">{{item.filmName}}</span>
+              <span class="score">{{item.filmScore}}</span>
             </div>
           </div>
           <div class="list_bottom">
@@ -26,21 +26,21 @@
     <!-- 即将上映 -->
     <div v-else class="content_item comming">
       <div class="item_head">
-        <span class="label">即将上映（107部）</span>
+        <span class="label">即将上映（{{movielist.filmNum}}部）</span>
         <span class="all">
           <a href>全部</a>
         </span>
       </div>
       <div class="item_list">
-        <div class="movie_list" v-for="(item, index) of movielist" :key="index">
+        <div class="movie_list" v-for="(item, index) of movielist.filmInfoList" :key="index">
           <div class="list_head">
-            <img :src="item.img" alt="影片海报">
+            <img :src="item.imgAddress" :alt="item.filmName">
             <div class="message">
-              <span class="movie_name">{{item.name}}</span>
+              <span class="movie_name">{{item.filmName}}</span>
             </div>
           </div>
           <div class="list_bottom">
-            <div class="number">12220202人想看</div>
+            <div class="number">{{item.expectNum}}人想看</div>
             <div class="options">
               <p class="trailer">预告片</p>
               <p class="pre_sale">预售</p>
@@ -57,10 +57,18 @@ export default {
   name: "MyShow",
   props: {
     movielist:{},
-    type: {}
+    type: Boolean
+  },
+  data() {
+    return {
+      list:{}
+    }
+  },
+  methods: {
+
   },
   mounted() {
-    console.log(this.movielist);
+
   }
 };
 </script>
@@ -113,6 +121,8 @@ export default {
             .movie_name {
               margin-left: 10px;
               font-size: 16px;
+              display: inline-block;
+              height: 21px;
             }
             .score {
               margin-right: 10px;

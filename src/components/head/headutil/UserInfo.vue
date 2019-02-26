@@ -2,7 +2,7 @@
   <div class="userInfo">
     <img src="../../../../static/imgs/user_default.png" alt="头像">
     <span class="caret"></span>
-    <ul></ul>
+    <div class="user_list"></div>
   </div>
 </template>
 

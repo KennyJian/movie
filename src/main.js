@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import Api from './common/api'
+
 Vue.config.productionTip = false
 
 
@@ -19,6 +21,9 @@ Vue.prototype.$validate=function(type,value){return Validate.validate(type,value
 // 通用过滤器
 import filters from '@/filter';
 Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
+
+// 引入axios
+Vue.prototype.$api=Api
 
 
 /* eslint-disable no-new */

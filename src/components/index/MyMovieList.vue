@@ -2,22 +2,24 @@
   <div>
     <div class="leaderboard">
       <p v-if="type" class="leaderboard_title">今日票房</p>
-      <p v-else class="expect leaderboard_title" >最受期待</p>
+      <p v-else class="expect leaderboard_title">最受期待</p>
       <div class="content">
         <div id="list_item" v-for="(item,index) of list" :key="index">
           <div v-if="index ==0" class="item_top">
-            <img src="https://p0.meituan.net/movie/879735a49da60134497e13c2d95e877c58219.jpg" alt>
+            <img :src="item.imgAddress" alt>
             <div class="top_right">
-              <p>{{item.name}}</p>
-              <p>{{item.num}}万</p>
+              <p>{{item.filmName}}</p>
+              <p v-if="type" class="box">{{item.boxNum}}万</p>
+              <p v-else class="expeact">{{item.expectNum}}万</p>
             </div>
           </div>
           <div class="grossed_last" v-else>
             <p class="movie_name">
-              <span :class="{top:index < 3 }">{{index + 1}}</span>
-              {{item.name}}
+              <span :class="{top:index < 3&&type, topE:index<3&&!type  }">{{parseInt(index,10)+1}}</span>
+              {{item.filmName}}
             </p>
-            <p class="movie_grossed">{{item.num}}万</p>
+            <p v-if="type" class="box">{{item.boxNum}}万</p>
+            <p v-else class="expeact">{{item.expectNum}}万</p>
           </div>
         </div>
       </div>
@@ -29,9 +31,7 @@
 export default {
   name: "MyList",
   props: {
-    list:{
-      type:Array
-    },
+    list:{},
     type: {
       type:Boolean
     }
@@ -42,6 +42,7 @@ export default {
 <style lang="less"  scoped>
 .leaderboard {
   width: 360px;
+  height: 475px;
   margin-left: 130px;
 
   .leaderboard_title {
@@ -114,5 +115,15 @@ export default {
     }
   }
 }
-
+.box {
+  color: #ef4238;
+  font-size: 14px;
+}
+.expeact {
+  color: #fdb863;
+  font-size: 14px;
+}
+.topE {
+  color:#fdb863;
+}
 </style>

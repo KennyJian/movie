@@ -1,8 +1,8 @@
+// 配置API接口地址
+var root = 'http://www.chong10010.cn:8088'
 var qs = require('querystring')   // qs序列化，解决data传参，后台无法接受的问题
 // 引用axios
 import axios from 'axios'
-import {root} from './config'
-import router from '../router'
 
 // 自定义判断元素类型JS
 function toType (obj) {
@@ -25,32 +25,23 @@ function filterNull (o) {
   return o
 }
 
-// 路由控制，当
 
-function apiAxios (method, params, success, failure) {
+function apiAxios (method, api, params, success, failure) {
   if (params) {
     params = filterNull(params)
   }
-  params.appid = '1'
-  params.token = 'e10adc3949ba59abbe56e057f20f883e'
-  params.PHPSESSID = window.sessionStorage.getItem('PHPSESSID')
+  // params.randomKey = '7z385s'
+  params.token = 'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI3ejM4NXMiLCJzdWIiOiIyIiwiZXhwIjoxNTQ5MTg4MDM3LCJpYXQiOjE1NDg1ODMyMzd9.C19ST5c1IN8xrKyejlnJ0RsbGdonkuwoE0CxhywSnWLz6TA7tKjvjmPJbQG8Fq2ADdKGpA3jQTd4wLIbq-3S1g'
+  // params.PHPSESSID='4cmuj7tapq5cn6ajbt6g5c1m87'
   axios({
     method: method,
     data: method === 'POST' || method === 'PUT' ? qs.stringify(params) : null,
     params: method === 'GET' || method === 'DELETE' ? params : null,
-    baseURL: root,
+    baseURL: root + api,
     withCredentials: false,
   })
   .then(function (res) {
       success(res.data)
-      if (res.data.code === 40011 || res.data.code === -400 || res.data.code === -404) {
-        router.push({
-          path: "/login",
-          querry: {
-            redirect: router.currentRoute.fullPath
-          } //从哪个页面跳转
-        })
-      }
   })
   .catch(function (err) {
     let res = err.response
@@ -59,18 +50,23 @@ function apiAxios (method, params, success, failure) {
     }
   })
 }
+
 // 返回在vue模板中的调用接口
 export default {
-  get: function (params, success, failure) {
-    return apiAxios('GET', params, success, failure)
+  get: function (params, api, success, failure) {
+    return apiAxios('GET', api, params, success, failure)
   },
-  post: function (params, success, failure) {
-    return apiAxios('POST', params, success, failure)
+  post: function (params, api, success, failure) {
+    return apiAxios('POST', api, params, success, failure)
   },
-  put: function (params, success, failure) {
-    return apiAxios('PUT', params, success, failure)
+  put: function (params, api, success, failure) {
+    return apiAxios('PUT', api, params, success, failure)
   },
-  delete: function (params, success, failure) {
-    return apiAxios('DELETE', params, success, failure)
+  delete: function (params, api, success, failure) {
+    return apiAxios('DELETE', api, params, success, failure)
   },
+  updatas:function(e,success){
+  	return updata(e,success)
+  }
 }
+
