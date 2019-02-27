@@ -66,10 +66,9 @@ export default {
 };
 </script>
 
-<style lang="less" >
+<style lang="less">
 .movie_content {
-  width: 1200px;
-  margin: 100px auto 0;
+  padding-top: 20px;
 }
 .index_content {
   margin: 60px 0 0 0;

@@ -8,12 +8,13 @@
         </div>
         <my-city></my-city>
         <div class="tabs_wrap">
-          <a
+          <p
             class="url"
-            v-for="(item,index) in navList"
-            :href="item.src"
+            v-for="(item, index) in navList"
             :key="index"
-          >{{item.label}}</a>
+            :class="{active:index == selected}"
+            @click="selectRouter(index)"
+          >{{item.label}}</p>
         </div>
       </div>
       <!-- 右边 -->
@@ -46,23 +47,44 @@ export default {
       navList: [
         {
           label: "首页",
-          name: "1",
           src: "/"
         },
         {
           label: "电影",
-          name: "2",
           src: "/movie"
         },
         {
           label: "影院",
-          name: "3",
           src: "/cinema"
         }
-      ]
+      ],
+      selected:0
     };
   },
-  mounted() {}
+  methods: {
+    selectRouter(index) {
+      let _this = this
+      _this.selected = index;
+      switch(index) {
+        case 0:
+          _this.$router.push('/')
+          break;
+        case 1:
+          _this.$router.push('/movie');
+          break;
+        case 2:
+          _this.$router.push('/cinema');
+          break;
+      }
+      this.router.push(path)
+    }
+  },
+  watch:{
+
+  },
+  mounted() {
+
+  }
 };
 </script>
 
@@ -90,13 +112,11 @@ export default {
         display: inline-block;
         width: 130px;
         height: 40px;
-
         img {
           width: 100%;
           height: 100%;
         }
       }
-
       .tabs_wrap {
         font-size: 18px;
         margin-left: 10px;
@@ -108,11 +128,9 @@ export default {
           text-decoration: none;
           color: #333;
         }
-
         .url:hover {
           color: #ef4238;
         }
-
         .active {
           background: #ef4238;
           color: #fff;
