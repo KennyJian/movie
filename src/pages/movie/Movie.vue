@@ -4,92 +4,143 @@
       <!-- 电影状态 -->
       <div class="top_header">
         <ul>
-          <li v-for="(top,index) of type" :key="index" :class="{active:index==typeselected}">正在热映</li>
-
+          <li v-for="(top,index) of type" :key="index" :class="{active:index==typeselected}" @click="checkIndex(index)">正在热映</li>
         </ul>
       </div>
       <!-- 电影类型 -->
-     <channel :list="channelList" :channelselect="channelSelect"></channel>
+      <channel :list="channelList" :channelselect="channelSelect" @channel="channelval"></channel>
     </div>
     <!-- 电影内容 -->
     <div class="movie_content">
       <!-- 单选框 -->
       <div class="movie_sort">
         <div class="sort_item">
-          <input type="radio">
+          <input type="radio" name="radios" value="1" @click="radio(1)" v-model="sortId">
           <span>按热门排序</span>
         </div>
         <div class="sort_item">
-          <input type="radio">
+          <input type="radio" name="radios" value="2" @click="radio(2)" v-model="sortId">
           <span>按时间排序</span>
         </div>
         <div class="sort_item">
-          <input type="radio">
+          <input type="radio" name="radios" value="3" @click="radio(3)" v-model="sortId">
           <span>按评价排序</span>
         </div>
       </div>
-      <div class="movie_list">
+      <!-- 电影列表 -->
+      <div v-if="show" class="movie_list">
         <div class="list_item" v-for="(item,index) of movieList" :key="index">
           <div class="item_img">
-            <img :src="item.imgAddress" alt="">
+            <img :src="item.imgAddress" alt>
           </div>
           <p class="item_name">{{item.filmName}}</p>
-          <p  v-if="item.filmType == 1" class="item_score">{{item.filmScore}}</p>
+          <p v-if="item.filmType == 1" class="item_score">{{item.filmScore}}</p>
           <p v-else class="movie_want">234567人想看</p>
         </div>
-
+      </div>
+      <!-- 查不到电影信息 -->
+      <div v-else class="no_movie">
+        抱歉，没有找到相关结果，请尝试用其他条件筛选。
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Channel from '@/components/movie/Channel'
+import Channel from "@/components/movie/Channel";
 export default {
-  components:{
+  components: {
     Channel
   },
   data() {
     return {
-      type:[
-        '正在热映',
-        '即将上映',
-        '经典影片'
-      ],
-      typeselected:0, //播放类型被选中
-      channelSelect:{
-        catselected:1, //电影类型被选中
-        sourceselected:1,//被选中区域
-        yearselected:1, //被选中年份
+      type: ["正在热映", "即将上映", "经典影片"],
+      typeselected: 0, //播放类型被选中
+      channelSelect: {
+        catselect: '1', //电影类型被选中
+        sourceselect: '1', //被选中区域
+        yearselect: '1', //被选中年份
       },
-      channelList:{},
+      channelList: {},
       movieList: {},
-      showType:'1', //查询类型
-      sortId:'', // 排序方式
-      catId:'', //类型编号
-      sourceId:'',//区域编号
-      yearId:'', //年代编号
-      nowpage:'', //当前页
-      pageSize:'' //每页显示条数
-    }
+      showType:'1', //顶部电影情况
+      sortId:'1', //排序方式
+      catId:'99',
+      sourceId:'99',
+      yearId:'99',
+      nowpage: "", //当前页
+      pageSize: "" ,//每页显示条数
+      show:true //数据展示
+    };
   },
   methods: {
-    getmovieList(showType,sortId,catId,sourceId,yearId) {
-      this.$api.get({}, '/film/getFilms', (res)=> {
-        this.movieList = {...res.data}
-      },
-      (error) => {
-        console.log(error);
-      })
+    // 顶部搜索
+    checkIndex(index) {
+      this.typeselected = index;
+      this.showType = index + 1;
+      this.getmovieList();
+    },
+    // 单选框搜索条件
+    radio(index) {
+      this.sortId = index
+      this.getmovieList();
+    },
+    // 子组件传值实现筛选框样式转换
+    channelval:function(msg) {
+      console.log(msg.id);
+      switch(msg.type){
+        case 1:
+        this.channelSelect.catselect = msg.id;
+        this.catId = msg.id;
+        break;
+        case 2:
+        this.channelSelect.sourceselect = msg.id;
+        this.sourceId = msg.id;
+        break;
+        case 3:
+        this.channelSelect.yearselect = msg.id;
+        this.yearId = msg.id;
+        break;
+      }
+      this.getmovieList();
+    },
+    // 传入搜索条件
+    getmovieList() {
+      var that = this;
+      this.$api.get(
+        {
+          showType:this.showType,
+          sortId:this.sortId,
+          catId:this.catId,
+          sourceId:this.sourceId,
+          yearId:this.yearId
+        },
+        "/film/getFilms",
+        (res) => {
+          if(res.data != 0) {
+            this.movieList = { ...res.data };
+          } else {
+            this.show = false;
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
     },
     // 获取搜索条件列表
     getChaneelList() {
-      this.$api.get({},'/film/getConditionList',(res)=> {
-         this.channelList ={...res.data};
-        console.log(res.data) ;
-      },(error) => {
-        console.log(error);
-      })
+      this.$api.get(
+        {},
+        "/film/getConditionList",
+        res => {
+          this.channelList = { ...res.data };
+          // console.log(res.data);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
   },
   mounted() {
@@ -158,19 +209,25 @@ export default {
         text-align: center;
         margin-top: 10px;
       }
-      .item_score,.movie_want {
+      .item_score,
+      .movie_want {
         margin-top: 10px;
         font-size: 16px;
         text-align: center;
         color: #ffb400;
       }
     }
-    .list_item:nth-child(n+2) {
-      margin:30px 0 0 23px;
+    .list_item:nth-child(n + 2) {
+      margin: 30px 0 0 23px;
     }
-    .list_item:nth-child(6n+7) {
+    .list_item:nth-child(6n + 7) {
       margin-left: 0;
     }
+  }
+  .no_movie {
+    margin: 40px 0 0 20px;
+    font-size: 16px;
+    color: #333;
   }
 }
 </style>

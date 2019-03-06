@@ -1,45 +1,80 @@
 <template>
-   <div class="movies_channel">
-        <ul class="channel_content">
-          <li class="channel_list">
-            <div class="list_title">类型：</div>
-            <ul class="list_content">
-              <li v-for="(item,index) of list.catInfo" :key="index" :class="{active:channelselect.catselected == item.catId}" ><p>{{item.catName}}</p></li>
-            </ul>
-          </li>
-          <li class="channel_list">
-            <div class="list_title">区域：</div>
-            <ul class="list_content">
-              <li v-for="(item,index) of list.sourceInfo" :key="index" :class="{active:channelselect.sourceselected == item.sourceId}"><p>{{item.sourceName}}</p></li>
-            </ul>
-          </li>
-          <li class="channel_list">
-            <div class="list_title">年代：</div>
-            <ul class="list_content">
-              <li v-for="(item,index) of list.yearInfo" :key="index" :class="{active:channelselect.yearselected == item.yearId}"><p>{{item.yearName}}</p></li>
-            </ul>
+  <div class="movies_channel">
+    <ul class="channel_content">
+      <li class="channel_list">
+        <div class="list_title">类型：</div>
+        <ul class="list_content">
+          <li
+            v-for="(item,index) of list.catInfo"
+            :key="index"
+            :class="{active:channelselect.catselect == item.catId}"
+            @click="handleclick(item.catId,'','')"
+          >
+            <p>{{item.catName}}</p>
           </li>
         </ul>
-      </div>
+      </li>
+      <li class="channel_list">
+        <div class="list_title">区域：</div>
+        <ul class="list_content">
+          <li
+            v-for="(item,index) of list.sourceInfo"
+            :key="index"
+            :class="{active:channelselect.sourceselect == item.sourceId}"
+            @click="handleclick('',item.sourceId,'')"
+          >
+            <p>{{item.sourceName}}</p>
+          </li>
+        </ul>
+      </li>
+      <li class="channel_list">
+        <div class="list_title">年代：</div>
+        <ul class="list_content">
+          <li
+            v-for="(item,index) of list.yearInfo"
+            :key="index"
+            :class="{active:channelselect.yearselect == item.yearId}"
+            @click="handleclick('','',item.yearId)"
+          >
+            <p>{{item.yearName}}</p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
-  name:'Channel',
-  props:{
-    list:Object,
-    channelselect:Object
+  name: "Channel",
+  props: {
+    list: Object,
+    channelselect: Object
   },
   data() {
     return {
-    }
+      channelType:1,
+      id:''
+    };
   },
   methods: {
-    handleclick(cat,source,year){
-
+    handleclick(cat, source, year) {
+      if(cat) {
+        this.channelType = 1;
+        this.id = cat;
+        this.$emit("channel", {id:this.id,type:this.channelType});
+      } else if(source) {
+        this.channelType = 2;
+        this.id = source;
+        this.$emit("channel", {id:this.id,type:this.channelType});
+      } else if(year) {
+        this.channelType = 3;
+        this.id = year;
+        this.$emit("channel", {id:this.id,type:this.channelType});
+      }
     }
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -52,23 +87,22 @@ export default {
     margin: 0;
     padding: 0;
     .channel_list {
-      padding: 10px 0!important;
+      padding: 10px 0 !important;
       font-size: 14px;
       .list_title {
-
         color: #999;
         float: left;
       }
       .list_content {
         list-style: none;
         margin-left: 40px;
-        li{
+        li {
           cursor: pointer;
           display: inline-block;
           padding: 3px 9px;
           margin-left: 12px;
           border-radius: 14px;
-          p{
+          p {
             color: #333;
           }
           p:hover {
@@ -78,16 +112,15 @@ export default {
         .active {
           background-color: #f34d41;
           color: #fff;
-          p{
+          p {
             color: #fff;
           }
         }
       }
     }
-    .channel_list:nth-child(n+2) {
-    border-top: 1px dotted #e5e5e5;
-  }
-
+    .channel_list:nth-child(n + 2) {
+      border-top: 1px dotted #e5e5e5;
+    }
   }
 }
 </style>
