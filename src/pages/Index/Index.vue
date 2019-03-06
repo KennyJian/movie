@@ -66,7 +66,7 @@ export default {
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .movie_content {
   padding-top: 20px;
 }

@@ -4,13 +4,12 @@
       <!-- 电影状态 -->
       <div class="top_header">
         <ul>
-          <li class="active">正在热映</li>
-          <li>即将上映</li>
-          <li>经典影片</li>
+          <li v-for="(top,index) of type" :key="index" :class="{active:index==typeselected}">正在热映</li>
+
         </ul>
       </div>
       <!-- 电影类型 -->
-     <channel :list="channelList"></channel>
+     <channel :list="channelList" :channelselect="channelSelect"></channel>
     </div>
     <!-- 电影内容 -->
     <div class="movie_content">
@@ -29,6 +28,17 @@
           <span>按评价排序</span>
         </div>
       </div>
+      <div class="movie_list">
+        <div class="list_item" v-for="(item,index) of movieList" :key="index">
+          <div class="item_img">
+            <img :src="item.imgAddress" alt="">
+          </div>
+          <p class="item_name">{{item.filmName}}</p>
+          <p  v-if="item.filmType == 1" class="item_score">{{item.filmScore}}</p>
+          <p v-else class="movie_want">234567人想看</p>
+        </div>
+
+      </div>
     </div>
   </div>
 </template>
@@ -41,26 +51,55 @@ export default {
   },
   data() {
     return {
-      channelList:{}
+      type:[
+        '正在热映',
+        '即将上映',
+        '经典影片'
+      ],
+      typeselected:0, //播放类型被选中
+      channelSelect:{
+        catselected:1, //电影类型被选中
+        sourceselected:1,//被选中区域
+        yearselected:1, //被选中年份
+      },
+      channelList:{},
+      movieList: {},
+      showType:'1', //查询类型
+      sortId:'', // 排序方式
+      catId:'', //类型编号
+      sourceId:'',//区域编号
+      yearId:'', //年代编号
+      nowpage:'', //当前页
+      pageSize:'' //每页显示条数
     }
   },
   methods: {
-    getList() {
+    getmovieList(showType,sortId,catId,sourceId,yearId) {
+      this.$api.get({}, '/film/getFilms', (res)=> {
+        this.movieList = {...res.data}
+      },
+      (error) => {
+        console.log(error);
+      })
+    },
+    // 获取搜索条件列表
+    getChaneelList() {
       this.$api.get({},'/film/getConditionList',(res)=> {
          this.channelList ={...res.data};
-         console.log(this.channelList);
+        console.log(res.data) ;
       },(error) => {
         console.log(error);
       })
     }
   },
   mounted() {
-    this.getList();
+    this.getChaneelList();
+    this.getmovieList();
   }
 };
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .top_header {
   width: 100%;
   height: 60px;
@@ -96,6 +135,41 @@ export default {
     .sort_item {
       display: inline-block;
       margin-right: 30px;
+    }
+  }
+  .movie_list {
+    width: 1078px;
+    margin: 0 auto;
+    .list_item {
+      width: 160px;
+      margin-top: 30px;
+      display: inline-block;
+      .list_img {
+        width: 160px;
+        height: 220px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .item_name {
+        color: #333;
+        font-size: 16px;
+        text-align: center;
+        margin-top: 10px;
+      }
+      .item_score,.movie_want {
+        margin-top: 10px;
+        font-size: 16px;
+        text-align: center;
+        color: #ffb400;
+      }
+    }
+    .list_item:nth-child(n+2) {
+      margin:30px 0 0 23px;
+    }
+    .list_item:nth-child(6n+7) {
+      margin-left: 0;
     }
   }
 }

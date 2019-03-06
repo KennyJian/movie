@@ -4,19 +4,19 @@
           <li class="channel_list">
             <div class="list_title">类型：</div>
             <ul class="list_content">
-              <li v-for="(item,index) of list.catInfo" :key="index"><p>{{item.catName}}</p></li>
+              <li v-for="(item,index) of list.catInfo" :key="index" :class="{active:channelselect.catselected == item.catId}" ><p>{{item.catName}}</p></li>
             </ul>
           </li>
           <li class="channel_list">
             <div class="list_title">区域：</div>
             <ul class="list_content">
-              <li v-for="(item,index) of list.sourceInfo" :key="index"><p>{{item.sourceName}}</p></li>
+              <li v-for="(item,index) of list.sourceInfo" :key="index" :class="{active:channelselect.sourceselected == item.sourceId}"><p>{{item.sourceName}}</p></li>
             </ul>
           </li>
           <li class="channel_list">
             <div class="list_title">年代：</div>
             <ul class="list_content">
-              <li v-for="(item,index) of list.yearInfo" :key="index"><p>{{item.yearName}}</p></li>
+              <li v-for="(item,index) of list.yearInfo" :key="index" :class="{active:channelselect.yearselected == item.yearId}"><p>{{item.yearName}}</p></li>
             </ul>
           </li>
         </ul>
@@ -27,17 +27,22 @@
 export default {
   name:'Channel',
   props:{
-    list:Object
+    list:Object,
+    channelselect:Object
   },
   data() {
     return {
+    }
+  },
+  methods: {
+    handleclick(cat,source,year){
 
     }
   }
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .movies_channel {
   margin: 40px auto 0;
   width: 1078px;
