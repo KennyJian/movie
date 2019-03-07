@@ -21,9 +21,9 @@
       <div class="right">
         <div class="search">
           <div class="search_input">
-            <input class="input" type="text" placeholder="找影视剧、影人、影院">
+            <input class="input" type="text" v-model="searchVal" @keyup.enter="search" placeholder="找影视剧、影人、影院">
             <div class="search_icon">
-              <img src="../../../static/imgs/ic_hone_search@2x.png" alt>
+              <img @click="search" src="../../../static/imgs/ic_hone_search@2x.png" alt>
             </div>
           </div>
         </div>
@@ -58,7 +58,8 @@ export default {
           src: "/cinema"
         }
       ],
-      selected:0
+      selected:0,
+      searchVal:''
     };
   },
   methods: {
@@ -77,6 +78,13 @@ export default {
           break;
       }
       this.router.push(path)
+    },
+    search() {
+      this.$router.push({
+        path:'/search',
+        query:{search:this.searchVal}
+      })
+      this.selected = 3;
     }
   },
   watch:{

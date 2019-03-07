@@ -22,6 +22,14 @@ const router = [
       meta: {
         title: '电影'
       }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: resolve => require(['@/pages/search/Search'], resolve),
+      meta: {
+        title: '搜索结果'
+      }
     }
 ]
 

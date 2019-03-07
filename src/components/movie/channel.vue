@@ -5,8 +5,8 @@
         <div class="list_title">类型：</div>
         <ul class="list_content">
           <li
-            v-for="(item,index) of list.catInfo"
-            :key="index"
+            v-for="item of list.catInfo"
+            :key="item.catId"
             :class="{active:channelselect.catselect == item.catId}"
             @click="handleclick(item.catId,'','')"
           >
@@ -18,8 +18,8 @@
         <div class="list_title">区域：</div>
         <ul class="list_content">
           <li
-            v-for="(item,index) of list.sourceInfo"
-            :key="index"
+            v-for="item of list.sourceInfo"
+            :key="item.sourceId"
             :class="{active:channelselect.sourceselect == item.sourceId}"
             @click="handleclick('',item.sourceId,'')"
           >
@@ -31,8 +31,8 @@
         <div class="list_title">年代：</div>
         <ul class="list_content">
           <li
-            v-for="(item,index) of list.yearInfo"
-            :key="index"
+            v-for="item of list.yearInfo"
+            :key="item.yearId"
             :class="{active:channelselect.yearselect == item.yearId}"
             @click="handleclick('','',item.yearId)"
           >
@@ -54,7 +54,8 @@ export default {
   data() {
     return {
       channelType:1,
-      id:''
+      id:'',
+      channelList:{}
     };
   },
   methods: {
@@ -73,6 +74,9 @@ export default {
         this.$emit("channel", {id:this.id,type:this.channelType});
       }
     }
+  },
+  mounted() {
+    console.log(this.list);
   }
 };
 </script>

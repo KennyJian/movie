@@ -4,7 +4,7 @@
       <!-- 电影状态 -->
       <div class="top_header">
         <ul>
-          <li v-for="(top,index) of type" :key="index" :class="{active:index==typeselected}" @click="checkIndex(index)">正在热映</li>
+          <li v-for="(top,index) of type" :key="index" :class="{active:index==typeselected}" @click="checkIndex(index)">{{top}}</li>
         </ul>
       </div>
       <!-- 电影类型 -->
@@ -22,7 +22,7 @@
           <input type="radio" name="radios" value="2" @click="radio(2)" v-model="sortId">
           <span>按时间排序</span>
         </div>
-        <div class="sort_item">
+        <div class="sort_item" v-show="showType != '2'">
           <input type="radio" name="radios" value="3" @click="radio(3)" v-model="sortId">
           <span>按评价排序</span>
         </div>
@@ -35,7 +35,7 @@
           </div>
           <p class="item_name">{{item.filmName}}</p>
           <p v-if="item.filmType == 1" class="item_score">{{item.filmScore}}</p>
-          <p v-else class="movie_want">234567人想看</p>
+          <p v-else class="movie_want">{{item.expectNum}}人想看</p>
         </div>
       </div>
       <!-- 查不到电影信息 -->
@@ -57,9 +57,9 @@ export default {
       type: ["正在热映", "即将上映", "经典影片"],
       typeselected: 0, //播放类型被选中
       channelSelect: {
-        catselect: '1', //电影类型被选中
-        sourceselect: '1', //被选中区域
-        yearselect: '1', //被选中年份
+        catselect: '99', //电影类型被选中
+        sourceselect: '99', //被选中区域
+        yearselect: '99', //被选中年份
       },
       channelList: {},
       movieList: {},
@@ -87,7 +87,6 @@ export default {
     },
     // 子组件传值实现筛选框样式转换
     channelval:function(msg) {
-      console.log(msg.id);
       switch(msg.type){
         case 1:
         this.channelSelect.catselect = msg.id;
@@ -106,7 +105,6 @@ export default {
     },
     // 传入搜索条件
     getmovieList() {
-      var that = this;
       this.$api.get(
         {
           showType:this.showType,
@@ -118,6 +116,7 @@ export default {
         "/film/getFilms",
         (res) => {
           if(res.data != 0) {
+            this.show = true;
             this.movieList = { ...res.data };
           } else {
             this.show = false;
@@ -133,14 +132,26 @@ export default {
       this.$api.get(
         {},
         "/film/getConditionList",
-        res => {
-          this.channelList = { ...res.data };
-          // console.log(res.data);
+        (res) => {
+          this.channelList.catInfo = this.ArraySplice(res.data.catInfo);
+          this.channelList.sourceInfo = this.ArraySplice(res.data.sourceInfo);
+          this.channelList.yearInfo = this.ArraySplice(res.data.yearInfo);
+
         },
         error => {
           console.log(error);
         }
       );
+    },
+    // 将数组逆序
+    ArraySplice(array) {
+      let length = array.length;
+      let Array = []
+      for (let i of array) {
+        Array[length-1] = i;
+        length--;
+      }
+      return Array;
     }
   },
   mounted() {
