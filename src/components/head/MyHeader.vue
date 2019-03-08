@@ -84,7 +84,8 @@ export default {
         path:'/search',
         query:{search:this.searchVal}
       })
-      this.selected = 3;
+      this.selected = 4;
+      this.searchVal = '';
     }
   },
   watch:{
