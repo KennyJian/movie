@@ -1,9 +1,8 @@
 <template>
-  <div class="mycity"  @mouseleave="hiddenList()">
+  <div class="mycity" @mouseleave="hiddenList()">
     <div class="city_head" @mouseenter="showlist()">
       <p class="current_city">{{currentCity}}</p>
-      <span class="caret" v-show="!show"></span>
-      <span class="caretup" v-show="show"></span>
+      <span class="caret"></span>
     </div>
     <div class="city" v-show="show">
       <div class="head">定位城市:{{currentCity}}</div>
@@ -11,7 +10,12 @@
         <div class="citylist" v-for="(letter,index) of cityList" :key="index">
           <div class="letter">{{index}}</div>
           <div class="list_name">
-            <p class="list_item" v-for="(name,index) of letter" :key="index" @click="selectCity(name)">{{name}}</p>
+            <p
+              class="list_item"
+              v-for="(name,index) of letter"
+              :key="index"
+              @click="selectCity(name)"
+            >{{name}}</p>
           </div>
         </div>
       </div>
@@ -485,20 +489,9 @@ export default {
     display: inline-block;
     width: 0;
     height: 0;
-    margin-left: 12px;
-    vertical-align: middle;
-    border-top: 5px solid #666;
-    border-right: 5px solid transparent;
-    border-left: 5px solid transparent;
-    transition: all 0.2s ease;
-  }
-  .caretup {
-    display: inline-block;
-    width: 0;
-    height: 0;
     margin-left: 10px;
     vertical-align: middle;
-    border-bottom: 5px solid #666;
+    border-top: 5px solid #666;
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
     transition: all 0.2s ease;
@@ -507,6 +500,12 @@ export default {
 .city_head:hover {
   border: 1px solid #dedede;
   border-width: 0 1px;
+  .caret {
+    border-bottom: 5px solid #666;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    border-top: 0;
+  }
 }
 .city {
   position: absolute;
@@ -526,38 +525,37 @@ export default {
     margin-bottom: 10px;
   }
   .city_content {
-  margin-top: 10px;
-  font-size: 13px;
-  padding-left: 20px;
-  .letter {
-    display: inline-block;
-    width: 20px;
-    vertical-align: top;
-    background-color: #eee;
-    font-weight: 700;
-    line-height: 20px;
-    margin-top: 5px;
-    text-align: center;
-  }
-  .list_name {
-    display: inline-block;
-    margin-bottom: 10px;
-    vertical-align: top;
-    width: 420px;
-    .list_item {
+    margin-top: 10px;
+    font-size: 13px;
+    padding-left: 20px;
+    .letter {
       display: inline-block;
-      line-height: 24px;
-      margin-top: 3px;
-      padding: 0 5px;
+      width: 20px;
+      vertical-align: top;
+      background-color: #eee;
+      font-weight: 700;
+      line-height: 20px;
+      margin-top: 5px;
       text-align: center;
-      cursor: pointer;
     }
-    .list_item:hover {
-      color: #fff;
-      background-color: #ef4238;
+    .list_name {
+      display: inline-block;
+      margin-bottom: 10px;
+      vertical-align: top;
+      width: 420px;
+      .list_item {
+        display: inline-block;
+        line-height: 24px;
+        margin-top: 3px;
+        padding: 0 5px;
+        text-align: center;
+        cursor: pointer;
+      }
+      .list_item:hover {
+        color: #fff;
+        background-color: #ef4238;
+      }
     }
   }
 }
-}
-
 </style>

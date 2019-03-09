@@ -20,11 +20,15 @@
       <!-- 右边 -->
       <div class="right">
         <div class="search">
-          <div class="search_input">
-            <input class="input" type="text" v-model="searchVal" @keyup.enter="search" placeholder="找影视剧、影人、影院">
-            <div class="search_icon">
-              <img @click="search" src="../../../static/imgs/ic_hone_search@2x.png" alt>
-            </div>
+          <input
+            class="input"
+            type="text"
+            v-model="searchVal"
+            @keyup.enter="search"
+            placeholder="找影视剧、影人、影院"
+          >
+          <div class="search_icon">
+            <img @click="search" src="../../../static/imgs/ic_hone_search@2x.png" alt>
           </div>
         </div>
         <user-info></user-info>
@@ -58,42 +62,38 @@ export default {
           src: "/cinema"
         }
       ],
-      selected:0,
-      searchVal:''
+      selected: 0,
+      searchVal: ""
     };
   },
   methods: {
     selectRouter(index) {
-      let _this = this
+      let _this = this;
       _this.selected = index;
-      switch(index) {
+      switch (index) {
         case 0:
-          _this.$router.push('/')
+          _this.$router.push("/");
           break;
         case 1:
-          _this.$router.push('/movie');
+          _this.$router.push("/movie");
           break;
         case 2:
-          _this.$router.push('/cinema');
+          _this.$router.push("/cinema");
           break;
       }
-      this.router.push(path)
+      this.router.push(path);
     },
     search() {
       this.$router.push({
-        path:'/search',
-        query:{search:this.searchVal}
-      })
+        path: "/search",
+        query: { search: this.searchVal }
+      });
       this.selected = 4;
-      this.searchVal = '';
+      this.searchVal = "";
     }
   },
-  watch:{
-
-  },
-  mounted() {
-
-  }
+  watch: {},
+  mounted() {}
 };
 </script>
 
@@ -144,7 +144,6 @@ export default {
           background: #ef4238;
           color: #fff;
         }
-
         .active:hover {
           color: #fff;
         }
@@ -156,9 +155,10 @@ export default {
       display: flex;
       align-items: center;
       .search {
-        display: inline-block;
+        width: 250px;
+        position: relative;
+        margin-right: 40px;
         .input {
-          width: 215px;
           height: 40px;
           border-radius: 40px;
           outline: none;
@@ -169,14 +169,13 @@ export default {
           overflow: hidden;
         }
         .search_icon {
-          display: inline-block;
           width: 40px;
           height: 40px;
           border-radius: 25px;
           background: #ef4238;
-          position: relative;
-          right: 45px;
-          top: 5px;
+          position: absolute;
+          right: 5px;
+          top: 0;
           text-align: center;
           padding-top: 10px;
           img {
