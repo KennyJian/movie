@@ -3,8 +3,8 @@
     <div class="content">
       <!-- 菜单左边 -->
       <div class="left">
-        <div class="logo">
-          <img src="../../../static/imgs/logo@2x.png" alt="logo">
+        <div class="logo" @click="routerto">
+          <img src="../../../static/imgs/logo.jpg" alt="logo">
         </div>
         <my-city></my-city>
         <div class="tabs_wrap">
@@ -40,6 +40,7 @@
 <script>
 import MyCity from "./headutil/MyCity.vue";
 import UserInfo from "./headutil/UserInfo.vue";
+import {SetStore,getStore} from '../../common/utils.js'
 export default {
   name: "MyHeader",
   components: {
@@ -68,20 +69,18 @@ export default {
   },
   methods: {
     selectRouter(index) {
-      let _this = this;
-      _this.selected = index;
+      this.selected = index;
       switch (index) {
         case 0:
-          _this.$router.push("/");
+          this.$router.push("/");
           break;
         case 1:
-          _this.$router.push("/movie");
+          this.$router.push("/movie");
           break;
         case 2:
-          _this.$router.push("/cinema");
+          this.$router.push("/cinema");
           break;
       }
-      this.router.push(path);
     },
     search() {
       this.$router.push({
@@ -90,10 +89,22 @@ export default {
       });
       this.selected = 4;
       this.searchVal = "";
+    },
+    routerto() {
+      this.$router.push('/');
     }
   },
-  watch: {},
-  mounted() {}
+  watch: {
+  },
+  mounted() {
+    if(this.$route.path == '/' || this.$route.path == '/index') {
+      this.selected = 0
+    }else if(this.$route.path == '/movie') {
+      this.selected = 1;
+    } else if(this.$route.path == '/') {
+      this.selected = 2;
+    }
+  }
 };
 </script>
 

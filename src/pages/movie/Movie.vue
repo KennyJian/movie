@@ -8,7 +8,7 @@
         </ul>
       </div>
       <!-- 电影类型 -->
-      <channel :list="channelList" :channelselect="channelSelect" @channel="channelval"></channel>
+      <channel :channellist="channelList" :channelselect="channelSelect" @channel="channelval"></channel>
     </div>
     <!-- 电影内容 -->
     <div class="movie_content">

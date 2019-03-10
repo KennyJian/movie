@@ -1,10 +1,10 @@
 <template>
-  <div class="userInfo">
-    <div class="userInfo_head">
+  <div class="userInfo" @mouseleave="hidden">
+    <div class="userInfo_head" @mouseover="showuser">
       <img src="../../../../static/imgs/user_default.png" alt="头像">
       <span class="caret"></span>
     </div>
-    <div class="user_list">
+    <div v-show="show" class="user_list">
       <div v-if="ISLOGIN" class="login">
         <p>我的订单</p>
         <p>基本信息</p>
@@ -22,10 +22,18 @@ export default {
   name: "UserInfo",
   data() {
     return {
-      ISLOGIN: true
-    };
+      ISLOGIN: false,
+      show: false
+    }
   },
-  methods: {}
+  methods: {
+    showuser() {
+      this.show = true;
+    },
+    hidden() {
+      this.show = false;
+    }
+  }
 };
 </script>
 
@@ -75,13 +83,16 @@ export default {
     background-color: #fff;
     font-size: 14px;
     color: #333;
-    padding: 5px 15px 5px;
     text-align: center;
     z-index: 1000;
     width: 100px;
     p{
       font-size: 14px;
       margin: 4px auto;
+      padding:5px 0;
+    }
+    p:hover {
+      background-color:#e0d9d9;
     }
   }
 }

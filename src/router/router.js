@@ -30,6 +30,28 @@ const router = [
       meta: {
         title: '搜索结果'
       }
+    },
+    {
+      path: '/person',
+      component: resolve => require(['@/pages/personCenter/index'], resolve),
+      children:[
+        {
+          path:'/person',
+          name:'personMessage',
+          component:resolve => require(['@/pages/personCenter/PersonMessage'],resolve),
+          meta: {
+            title:'基本信息'
+          }
+        },
+        {
+          path:'/order',
+          name:'order',
+          component:resolve => require(['@/pages/personCenter/Order'],resolve),
+          meta: {
+            title:'我的订单'
+          }
+        }
+      ]
     }
 ]
 
