@@ -165,10 +165,13 @@ export default {
       display: inline-block;
       display: flex;
       align-items: center;
+      width: 360px;
+      display: flex;
+      justify-content: space-between;
       .search {
         width: 250px;
         position: relative;
-        margin-right: 40px;
+        // margin-right: 40px;
         .input {
           height: 40px;
           border-radius: 40px;

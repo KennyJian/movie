@@ -48,6 +48,7 @@
 
 <script>
 import Channel from "@/components/movie/Channel";
+import {SetStore} from "@/common/utils.js"
 export default {
   components: {
     Channel
@@ -133,10 +134,10 @@ export default {
         {},
         "/film/getConditionList",
         (res) => {
-          this.channelList.catInfo = this.ArraySplice(res.data.catInfo);
-          this.channelList.sourceInfo = this.ArraySplice(res.data.sourceInfo);
-          this.channelList.yearInfo = this.ArraySplice(res.data.yearInfo);
-
+          res.data.catInfo = this.ArraySplice(res.data.catInfo);
+          res.data.sourceInfo = this.ArraySplice(res.data.sourceInfo);
+          res.data.yearInfo = this.ArraySplice(res.data.yearInfo);
+          this.channelList = {...res.data};
         },
         error => {
           console.log(error);

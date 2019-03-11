@@ -42,7 +42,7 @@ export default {
   position: relative;
   .userInfo_head {
     display: inline-block;
-    min-width: 62px;
+    width: 70px;
     height: 80px;
     line-height: 80px;
     img {
@@ -50,12 +50,13 @@ export default {
       height: 40px;
       border-radius: 30px;
       vertical-align: middle;
+      padding-left: 2px;
     }
     .caret {
       display: inline-block;
       width: 0;
       height: 0;
-      margin-left: 2px;
+      margin-left: 4px;
       vertical-align: middle;
       border-top: 5px solid #666;
       border-right: 5px solid transparent;
@@ -67,7 +68,6 @@ export default {
   .userInfo_head:hover {
     border: 1px solid #dedede;
     border-width: 0 1px;
-    width: 58px;
     .caret {
       border-bottom: 5px solid #666;
       border-right: 5px solid transparent;

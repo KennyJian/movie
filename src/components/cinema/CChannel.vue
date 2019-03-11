@@ -2,41 +2,41 @@
   <div class="movies_channel">
     <ul class="channel_content">
       <li class="channel_list">
-        <div class="list_title">类型：</div>
+        <div class="list_title">品牌：</div>
         <ul class="list_content">
           <li
-            v-for="item of channellist.catInfo"
-            :key="item.catId"
-            :class="{active:channelselect.catselect == item.catId}"
-            @click="handleclick(item.catId,'','')"
+            v-for="item of channel.brandList"
+            :key="item.brandId"
+            :class="{active:channelselect.brandselect == item.brandId}"
+            @click="handleclick(item.brandId,'','')"
           >
-            <p>{{item.catName}}</p>
+            <p>{{item.brandName}}</p>
           </li>
         </ul>
       </li>
       <li class="channel_list">
-        <div class="list_title">区域：</div>
+        <div class="list_title">行政区：</div>
         <ul class="list_content">
           <li
-            v-for="item of channellist.sourceInfo"
-            :key="item.sourceId"
-            :class="{active:channelselect.sourceselect == item.sourceId}"
-            @click="handleclick('',item.sourceId,'')"
+            v-for="item of channel.areaList"
+            :key="item.areaId"
+            :class="{active:channelselect.areaselect == item.areaId}"
+            @click="handleclick('',item.areaId,'')"
           >
-            <p>{{item.sourceName}}</p>
+            <p>{{item.areaName}}</p>
           </li>
         </ul>
       </li>
       <li class="channel_list">
-        <div class="list_title">年代：</div>
+        <div class="list_title">特殊区：</div>
         <ul class="list_content">
           <li
-            v-for="item of channellist.yearInfo"
-            :key="item.yearId"
-            :class="{active:channelselect.yearselect == item.yearId}"
-            @click="handleclick('','',item.yearId)"
+            v-for="item of channel.hallTypeList"
+            :key="item.hallTypeId"
+            :class="{active:channelselect.hallselect == item.hallTypeId}"
+            @click="handleclick('','',item.hallTypeId)"
           >
-            <p>{{item.yearName}}</p>
+            <p>{{item.hallTypeName}}</p>
           </li>
         </ul>
       </li>
@@ -46,9 +46,9 @@
 
 <script>
 export default {
-  name: "Channel",
+  name: "CChannel",
   props: {
-    channellist: Object,
+    channel: Object,
     channelselect: Object
   },
   data() {
@@ -75,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.channellist);
+
   }
 };
 </script>
@@ -83,7 +83,7 @@ export default {
 <style lang="less" scoped>
 .movies_channel {
   margin: 40px auto 0;
-  width: 1078px;
+  width: 1160px;
   padding: 0 20px;
   border: 1px solid #e5e5e5;
   .channel_content {

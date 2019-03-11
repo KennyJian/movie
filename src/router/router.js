@@ -24,6 +24,14 @@ const router = [
       }
     },
     {
+      path:'/cinema',
+      name:'cinema',
+      component: resolve => require(['@/pages/cinema/Cinema'],resolve),
+      meta: {
+        title: '影院'
+      }
+    },
+    {
       path: '/search',
       name: 'search',
       component: resolve => require(['@/pages/search/Search'], resolve),

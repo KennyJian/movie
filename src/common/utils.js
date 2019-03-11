@@ -3,7 +3,7 @@
 export const SetStore = (name, content) => {
   if(!name) return;
   if( typeof content !== 'string' ) {
-    content = Json.stringify(content);
+    content = JSON.stringify(content);
   }
   window.localStorage.setItem(name, content);
 }
