@@ -42,6 +42,20 @@
       <div v-else class="no_movie">
         抱歉，没有找到相关结果，请尝试用其他条件筛选。
       </div>
+      <!-- 底部分页 -->
+    <div class="movie_bottom">
+      <el-pagination
+        background
+        prev-text="上一页"
+        next-text="下一页"
+        @size-change="handleSizeChange"
+        @current-change="currentChange"
+        :current-page="currentPage"
+        :page-size="pagesize"
+        layout="prev, pager, next"
+        :total="totalLength"
+      ></el-pagination>
+    </div>
     </div>
   </div>
 </template>
@@ -69,8 +83,9 @@ export default {
       catId:'99',
       sourceId:'99',
       yearId:'99',
-      nowpage: "", //当前页
-      pageSize: "" ,//每页显示条数
+      currentPage:1,//当前页
+      totalLength:-1, //数据总量
+      pagesize:16, //每页的数据量
       show:true //数据展示
     };
   },
@@ -153,6 +168,16 @@ export default {
         length--;
       }
       return Array;
+    },
+    // 改变每页数据
+    handleSizeChange:function(size) {
+      this.pagesize = size;
+    },
+    currentChange(currentPage) {
+      window.scroll(0, 0);
+      this.currentPage = currentPage;
+      this.first_row = (currentPage - 1) * this.pagesize;
+      this.getcinema();
     }
   },
   mounted() {

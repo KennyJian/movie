@@ -28,6 +28,20 @@
         <p class="lib">2. 请缩短关键词</p>
       </div>
     </div>
+    <!-- 底部分页 -->
+    <div class="search_bottom">
+      <el-pagination
+        background
+        prev-text="上一页"
+        next-text="下一页"
+        @size-change="handleSizeChange"
+        @current-change="currentChange"
+        :current-page="currentPage"
+        :page-size="pagesize"
+        layout="prev, pager, next"
+        :total="totalLength"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
@@ -38,7 +52,10 @@ export default {
     return {
       searchReturn: true,
       searchVal: "",
-      searchList:{}
+      searchList:{},
+      currentPage:1,//当前页
+      totalLength:-1, //数据总量
+      pagesize:16 //每页的数据量
     };
   },
   methods: {
@@ -59,6 +76,16 @@ export default {
           console.log(error);
         }
       );
+    },
+    // 改变每页数据
+    handleSizeChange:function(size) {
+      this.pagesize = size;
+    },
+    currentChange(currentPage) {
+      window.scroll(0, 0);
+      this.currentPage = currentPage;
+      this.first_row = (currentPage - 1) * this.pagesize;
+      this.getcinema();
     }
   },
   mounted() {

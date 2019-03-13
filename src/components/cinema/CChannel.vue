@@ -82,8 +82,8 @@ export default {
 
 <style lang="less" scoped>
 .movies_channel {
-  margin: 40px auto 0;
-  width: 1160px;
+  margin: 100px auto 0;
+  width: 100%;
   padding: 0 20px;
   border: 1px solid #e5e5e5;
   .channel_content {

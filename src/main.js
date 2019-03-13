@@ -3,12 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import { Pagination } from 'element-ui'
 import Api from './common/api'
 
 Vue.config.productionTip = false
 
-
+Vue.component(Pagination.name, Pagination);
+Vue.use(Pagination);
 //时间戳转换
 import {formatDate ,dateFtt} from './common/utils'
 Vue.prototype.$formatDate=formatDate
@@ -24,7 +25,6 @@ Object.keys(filters).forEach(k => Vue.filter(k, filters[k]));
 
 // 引入axios
 Vue.prototype.$api=Api
-
 
 /* eslint-disable no-new */
 new Vue({

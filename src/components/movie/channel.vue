@@ -73,9 +73,6 @@ export default {
         this.$emit("channel", {id:this.id,type:this.channelType});
       }
     }
-  },
-  mounted() {
-    console.log(this.channellist);
   }
 };
 </script>
