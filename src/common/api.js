@@ -30,9 +30,7 @@ function apiAxios (method, api, params, success, failure) {
   if (params) {
     params = filterNull(params)
   }
-  // params.randomKey = '7z385s'
   params.token = 'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI3ejM4NXMiLCJzdWIiOiIyIiwiZXhwIjoxNTQ5MTg4MDM3LCJpYXQiOjE1NDg1ODMyMzd9.C19ST5c1IN8xrKyejlnJ0RsbGdonkuwoE0CxhywSnWLz6TA7tKjvjmPJbQG8Fq2ADdKGpA3jQTd4wLIbq-3S1g'
-  // params.PHPSESSID='4cmuj7tapq5cn6ajbt6g5c1m87'
   axios({
     method: method,
     data: method === 'POST' || method === 'PUT' ? qs.stringify(params) : null,

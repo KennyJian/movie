@@ -40,6 +40,14 @@ const router = [
       }
     },
     {
+      path:'/details',
+      name:'details',
+      component: resolve => require(['@/pages/details/Details'], resolve),
+      meta: {
+        title:'电影详情'
+      }
+    },
+    {
       path: '/person',
       component: resolve => require(['@/pages/personCenter/index'], resolve),
       children:[
