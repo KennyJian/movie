@@ -23,7 +23,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style lang="less">
   .content {
     margin: 80px auto 0;
     width: 1200px;

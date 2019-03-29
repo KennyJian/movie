@@ -3,6 +3,7 @@ var root = 'http://www.chong10010.cn:8088'
 var qs = require('querystring')   // qs序列化，解决data传参，后台无法接受的问题
 // 引用axios
 import axios from 'axios'
+import {getCookie} from './utils'
 
 // 自定义判断元素类型JS
 function toType (obj) {
@@ -30,13 +31,15 @@ function apiAxios (method, api, params, success, failure) {
   if (params) {
     params = filterNull(params)
   }
-  params.token = 'eyJhbGciOiJIUzUxMiJ9.eyJyYW5kb21LZXkiOiI3ejM4NXMiLCJzdWIiOiIyIiwiZXhwIjoxNTQ5MTg4MDM3LCJpYXQiOjE1NDg1ODMyMzd9.C19ST5c1IN8xrKyejlnJ0RsbGdonkuwoE0CxhywSnWLz6TA7tKjvjmPJbQG8Fq2ADdKGpA3jQTd4wLIbq-3S1g'
   axios({
     method: method,
     data: method === 'POST' || method === 'PUT' ? qs.stringify(params) : null,
     params: method === 'GET' || method === 'DELETE' ? params : null,
     baseURL: root + api,
     withCredentials: false,
+    headers:{
+      "Authorization": "Bearer " + getCookie("key")
+    }
   })
   .then(function (res) {
       success(res.data)

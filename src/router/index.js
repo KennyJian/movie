@@ -15,6 +15,13 @@ const routes = [
     children: [
       ...router
     ]
+  },
+  {
+    path: '/login',
+    component: resolve => require(["@/pages/LoginR/Login"], resolve),
+    meta: {
+      title: '登录'
+     }
   }
 ]
 // 路由整合

@@ -1,7 +1,7 @@
 <template>
   <div class="userInfo" @mouseleave="hidden">
     <div class="userInfo_head" @mouseover="showuser">
-      <img src="../../../../static/imgs/user_default.png" alt="头像">
+      <img :src="userImg" alt="头像">
       <span class="caret"></span>
     </div>
     <div v-show="show" class="user_list">
@@ -11,19 +11,21 @@
         <p>退出登录</p>
       </div>
       <div v-else class="personCenter">
-        <p>登录</p>
+        <router-link to="/login">登录</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {getCookie} from "../../../common/utils.js"
 export default {
   name: "UserInfo",
   data() {
     return {
       ISLOGIN: false,
-      show: false
+      show: false,
+      userImg:'../../../../static/imgs/user_default.png'
     }
   },
   methods: {
@@ -32,7 +34,21 @@ export default {
     },
     hidden() {
       this.show = false;
+    },
+    getUser() {
+      this.$api.post({Authorization : "Bearer " + getCookie("key")},'/user/getUserInfo', (res)=> {
+        if(res.data) {
+          this.ISLOGIN = true;
+
+          let user = res.imgPre + res.data.headUrl;
+          console.log(user);
+          this.userImg = res.imgPre + res.data.headUrl;
+        }
+      })
     }
+  },
+  mounted() {
+    this.getUser()
   }
 };
 </script>
@@ -94,6 +110,12 @@ export default {
     p:hover {
       background-color:#e0d9d9;
     }
+    a {
+      display: block;
+      height: 40px;
+      line-height: 40px;
+    }
   }
+
 }
 </style>
