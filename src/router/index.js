@@ -22,6 +22,13 @@ const routes = [
     meta: {
       title: '登录'
      }
+  },
+  {
+    path: '/register',
+    component: resolve => require(["@/pages/LoginR/Register"], resolve),
+    meta: {
+      title: '注册'
+     }
   }
 ]
 // 路由整合

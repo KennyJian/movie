@@ -45,12 +45,12 @@ export default {
       line-height: 40px;
       color: #333;
     }
-    .active {
 
-    }
   }
   .person_right {
     display: inline-block;
     width: 950px;
+    vertical-align: top;
+    padding-left: 40px;
   }
 </style>
