@@ -2,8 +2,8 @@
   <div class="personCenter">
     <div class="person_left">
         <h1 class="title">个人中心</h1>
-        <router-link to="/order">我的订单</router-link>
-        <router-link to="/person">我的信息</router-link>
+        <router-link to="/order"  :class="{'active': $route.path === '/order' }" >我的订单</router-link>
+        <router-link to="/person"  :class="{'active':$route.path === '/person'}">我的信息</router-link>
     </div>
     <div class="person_right">
       <router-view />
@@ -44,6 +44,10 @@ export default {
       height: 40px;
       line-height: 40px;
       color: #333;
+    }
+    .active{
+      background-color:#ef4238;
+      color:#fff;
     }
 
   }

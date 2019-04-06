@@ -6,9 +6,9 @@
     </div>
     <div v-show="show" class="user_list">
       <div v-if="ISLOGIN" class="login">
-        <p>我的订单</p>
-        <p>基本信息</p>
-        <p>退出登录</p>
+        <router-link to="/order">我的订单</router-link>
+        <router-link to="/person">基本信息</router-link>
+        <p @click="checkOut()">退出登录</p>
       </div>
       <div v-else class="personCenter">
         <router-link to="/login">登录</router-link>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {getCookie} from "../../../common/utils.js"
+import {getCookie,setCookie} from "../../../common/utils.js"
 export default {
   name: "UserInfo",
   data() {
@@ -39,16 +39,23 @@ export default {
       this.$api.post({Authorization : "Bearer " + getCookie("key")},'/user/getUserInfo', (res)=> {
         if(res.data) {
           this.ISLOGIN = true;
-
           let user = res.imgPre + res.data.headUrl;
-          console.log(user);
+          // console.log(user);
           this.userImg = res.imgPre + res.data.headUrl;
         }
+      })
+    },
+    checkOut() {
+      this.$api.post({},"/user/logout",(res) => {
+        this.ISLOGIN == false;
+        setCookie('key','');
+        this.userImg == "../../../../static/imgs/user_default.png"
+        this.$router.push('/index');
       })
     }
   },
   mounted() {
-    this.getUser()
+    this.getUser();
   }
 };
 </script>
@@ -102,18 +109,15 @@ export default {
     text-align: center;
     z-index: 1000;
     width: 100px;
-    p{
+    p,a{
       font-size: 14px;
-      margin: 4px auto;
-      padding:5px 0;
-    }
-    p:hover {
-      background-color:#e0d9d9;
-    }
-    a {
       display: block;
-      height: 40px;
-      line-height: 40px;
+      height: 30px;
+      line-height: 30px;
+      color: #333;
+    }
+    p:hover,a:hover {
+      background-color:#e0d9d9;
     }
   }
 

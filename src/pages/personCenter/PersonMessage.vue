@@ -7,8 +7,15 @@
           <img :src="userImg" alt>
         </div>
         <div class="img_upload">
-          <p>上传图片</p>
-          <input type="file">
+          <!-- <p>上传图片</p> -->
+          <!-- <input type="file"> -->
+          <el-upload
+          class="uploadImg"
+          action="http://www.chong10010.cn:8088/user/upload"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+          >上传图片</el-upload>
         </div>
         <p class="tips">支持JPG,JPEG,PNG格式,且文件需小于1M</p>
       </div>
@@ -40,26 +47,6 @@
             <span>女</span>
           </div>
         </div>
-        <!-- 生活状态 -->
-        <div class="content_sex">
-          <label for>婚姻状态：</label>
-          <div class="sex_radio">
-            <input type="radio" name="sex" value="0" v-model="sex">
-            <span>单身</span>
-          </div>
-          <div class="sex_radio">
-            <input type="radio" name="sex" value="1" v-model="sex">
-            <span>热恋中</span>
-          </div>
-          <div class="sex_radio">
-            <input type="radio" name="sex" value="2" v-model="sex">
-            <span>已婚</span>
-          </div>
-          <div class="sex_radio">
-            <input type="radio" name="sex" value="3" v-model="sex">
-            <span>为人父母</span>
-          </div>
-        </div>
         <!-- 生日 -->
         <div class="content_birthday">
           <label for>生日：</label>
@@ -76,12 +63,33 @@
             <span>日</span>
           </div>
         </div>
+        <!-- 生活状态 -->
+        <div class="content_sex">
+          <label for>婚姻状态：</label>
+          <div class="sex_radio">
+            <input type="radio" name="status" value="0" v-model="status">
+            <span>单身</span>
+          </div>
+          <div class="sex_radio">
+            <input type="radio" name="status" value="1" v-model="status">
+            <span>热恋中</span>
+          </div>
+          <div class="sex_radio">
+            <input type="radio" name="status" value="2" v-model="status">
+            <span>已婚</span>
+          </div>
+          <div class="sex_radio">
+            <input type="radio" name="status" value="3" v-model="status">
+            <span>为人父母</span>
+          </div>
+        </div>
+
         <!-- 个性签名 -->
         <div class="content_biography">
           <label for>个性签名：</label>
           <input type="text" v-model="biography">
         </div>
-        <div class="submit">保存</div>
+        <div class="submit" @click="update">保存</div>
       </div>
     </div>
   </div>
@@ -105,6 +113,7 @@ export default {
     };
   },
   methods: {
+    // 获取用户信息
     getuserInfo() {
       var that = this;
       this.$api.post({}, "/user/getUserInfo", res => {
@@ -122,9 +131,11 @@ export default {
         that.biography = res.data.biography;
       });
     },
+    // 更新信息
     update() {
+      // console.log("update");
       this.data();
-      let that = this;
+      var that = this;
       this.$api.post({
         nickName:that.name,
         email:that.email,
@@ -133,7 +144,8 @@ export default {
         birthday:that.date,
         lifeState:that.status,
         biography:that.biography
-      },(res) => {
+      },"/user/updateUserInfo",(res) => {
+        console.log(res);
         if(res.status == 200) {
           alert("修改成功");
         } else {
@@ -143,7 +155,20 @@ export default {
     },
     data() {
       this.date = this.year + this.month + this.day;
-    }
+    },
+    // 上传图片
+     handleAvatarSuccess(res, file) {
+        this.userImg = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 1;
+
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 1MB!');
+        }
+        return  isLt2M;
+      }
+
   },
   mounted() {
     this.getuserInfo();
@@ -176,7 +201,7 @@ export default {
       }
     }
     .img_upload {
-      p {
+      .uploadImg {
         cursor: pointer;
         margin: 20px auto 0;
         width: 182px;
@@ -190,18 +215,9 @@ export default {
         padding: 0;
         text-align: center;
       }
-      input {
-        width: 258px;
-        height: 56px;
-        z-index: 333;
-        position: relative;
-        bottom: 56px;
-        opacity: 0;
-        cursor: pointer;
-      }
     }
     .tips {
-      margin-top: -30px;
+      margin-top: 10px;
       color: #999;
       font-size: 18px;
       line-height: 30px;
