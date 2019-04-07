@@ -31,6 +31,7 @@
           </div>
           <div class="intro_acter">
             <div class="intro_head">演职人员</div>
+            <div class=""></div>
           </div>
           <div class="intro_img">
             <div class="intro_head">图集</div>
@@ -68,7 +69,16 @@ export default {
       selected: 1
     };
   },
-  mounted() {}
+  methods:{
+    getFilm(url) {
+      this.$api.get({search:0},"/film/films/"+url,(res)=>{
+        console.log(res);
+      })
+    }
+  },
+  mounted() {
+    this.getFilm(2);
+  }
 };
 </script>
 

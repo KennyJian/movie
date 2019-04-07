@@ -8,13 +8,14 @@
         </div>
         <my-city></my-city>
         <div class="tabs_wrap">
-          <p
+          <router-link
+            :to="item.src"
             class="url"
             v-for="(item, index) in navList"
             :key="index"
-            :class="{active:index == selected}"
-            @click="selectRouter(index)"
-          >{{item.label}}</p>
+            :class="{active:$route.path == item.src}"
+
+          >{{item.label}}</router-link>
         </div>
       </div>
       <!-- 右边 -->
@@ -52,7 +53,7 @@ export default {
       navList: [
         {
           label: "首页",
-          src: "/"
+          src: "/index"
         },
         {
           label: "电影",
@@ -63,31 +64,15 @@ export default {
           src: "/cinema"
         }
       ],
-      selected: 0,
       searchVal: ""
     };
   },
   methods: {
-    selectRouter(index) {
-      this.selected = index;
-      switch (index) {
-        case 0:
-          this.$router.push("/");
-          break;
-        case 1:
-          this.$router.push("/movie");
-          break;
-        case 2:
-          this.$router.push("/cinema");
-          break;
-      }
-    },
     search() {
       this.$router.push({
         path: "/search",
         query: { search: this.searchVal }
       });
-      this.selected = 4;
       this.searchVal = "";
     },
     routerto() {
@@ -97,13 +82,6 @@ export default {
   watch: {
   },
   mounted() {
-    if(this.$route.path == '/' || this.$route.path == '/index') {
-      this.selected = 0
-    }else if(this.$route.path == '/movie') {
-      this.selected = 1;
-    } else if(this.$route.path == '/') {
-      this.selected = 2;
-    }
   }
 };
 </script>
