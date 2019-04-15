@@ -11,7 +11,7 @@
           <div class="head_right">
             <img src="../../../static/imgs/delete.png" alt="">
           </div>
-        </div>
+        </div>d
         <div class="item_center">
           <div class="left">
             <div class="media_img">
