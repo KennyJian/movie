@@ -16,9 +16,9 @@
         </div>
         <div class="table_item">
           <img src="../../../static/imgs/pass.png">
-          <input type="text" v-model="password" placeholder="密码">
+          <input type="password" v-model="password" placeholder="密码">
         </div>
-        <router-link class="login_forget" to="/register">忘记密码?</router-link>
+        <router-link class="login_forget" to="/register">忘记密码?直接注册新的吧</router-link>
         <div class="login_submit" @click="checkout">登录</div>
         <p class="login_tip">还没有账号？<router-link  class="login_to" to="/register">免费注册</router-link></p>
       </div>

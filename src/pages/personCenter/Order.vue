@@ -1,12 +1,12 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div class="order">
       <p class="order_head">我的订单</p>
     <div class="order_content">
       <div class="content_item" v-for="(item,index) of orderList" :key="index">
         <div class="item_head">
           <div class="head_left">
-            <p class="date">{{item.fieldTime}}</p>
-            <p class="order_num"> 猫眼订单号:{{item.orderTimestamp}}</p>
+            <p class="date">{{timestampToTime(item.orderTimestamp)}}</p>
+            <p class="order_num"> 订单号:{{item.orderId}}</p>
           </div>
           <div class="head_right">
             <img src="../../../static/imgs/delete.png" alt="">
@@ -27,9 +27,10 @@
           <div class="right">
             <p class="price">￥{{item.orderPrice}}</p>
             <p v-if="item.orderStatus == '已支付'" class="status">已支付</p>
-            <p v-else-if="item.orderStatus == '未支付'" class="status">未支付</p>
-            <p v-else>已结束</p>
-            <p class="details">查看详情</p>
+            <p v-else-if="item.orderStatus == '待支付'" class="status">待支付</p>
+            <p v-else>已关闭</p>
+            <p  v-if="item.orderStatus == '待支付'" style="color:red" class="details" v-on:click="getQrCode">前往支付</p>
+            <p v-else class="details">查看详情</p>
           </div>
         </div>
       </div>
@@ -53,6 +54,19 @@ export default {
           console.log(this.orderList);
         }
       })
+    },
+    timestampToTime (cjsj) {
+      var date = new Date(cjsj*1000) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear() + '-'
+      var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-'
+      var D = date.getDate() + ' '
+      var h = date.getHours() + ':'
+      var m = date.getMinutes() + ':'
+      var s = date.getSeconds()
+      return Y+M+D+h+m+s
+    },
+    getQrCode(){
+      console.log("111")
     }
   },
   mounted() {
