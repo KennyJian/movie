@@ -11,7 +11,7 @@
           <div class="head_right">
             <img src="../../../static/imgs/delete.png" alt="">
           </div>
-        </div>d
+        </div>
         <div class="item_center">
           <div class="left">
             <div class="media_img">
@@ -29,8 +29,19 @@
             <p v-if="item.orderStatus == '已支付'" class="status">已支付</p>
             <p v-else-if="item.orderStatus == '待支付'" class="status">待支付</p>
             <p v-else>已关闭</p>
-            <p  v-if="item.orderStatus == '待支付'" style="color:red" class="details" v-on:click="getQrCode">前往支付</p>
+            <p  v-if="item.orderStatus == '待支付'" style="color:red" class="details" v-on:click="getQrCode(item.orderId)">前往支付</p>
             <p v-else class="details">查看详情</p>
+            <el-dialog
+              title="支付二维码"
+              :visible.sync="centerDialogVisible"
+              width="30%"
+              center>
+              <img :src="qrCodeImg" style="margin-left:25%"></img>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="centerDialogVisible = false">关 闭</el-button>
+                <el-button type="danger" @click="getPayResult(selectItem)">查询支付结果</el-button>
+              </span>
+            </el-dialog>
           </div>
         </div>
       </div>
@@ -43,7 +54,10 @@ export default {
   data() {
     return {
       deleteIndex:'',
-      orderList:[]
+      orderList:[],
+      qrCodeImg:'',
+      centerDialogVisible: false,
+      selectItem:''
     }
   },
   methods: {
@@ -65,8 +79,33 @@ export default {
       var s = date.getSeconds()
       return Y+M+D+h+m+s
     },
-    getQrCode(){
-      console.log("111")
+    getQrCode: function (orderId) {
+      var that = this;
+      that.selectItem=orderId
+      this.$api.post({
+        orderId: orderId,
+      }, "/order/getPayInfo", (res) => {
+        if (res.status == 200) {
+          that.qrCodeImg = res.imgPre + res.data.qRCodeAddress
+          console.log(that.qrCodeImg)
+          that.centerDialogVisible=true
+        } else {
+          alert("获取支付二维码失败")
+        }
+      })
+    },
+    getPayResult (orderId) {
+      var that = this;
+      console.log(orderId)
+      this.$api.post({
+        orderId: orderId,
+      }, "/order/getPayResult", (res) => {
+        if (res.status == 200) {
+          alert(res.data.orderMsg)
+        } else {
+          alert("获取支付结果失败")
+        }
+      })
     }
   },
   mounted() {
