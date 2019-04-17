@@ -50,7 +50,7 @@ export default {
       hallId:'99',
       cinemaList:[],
       currentPage:1,//当前页
-      totalLength:-1, //数据总量
+      totalLength:7, //数据总量
       pagesize:12 //每页的数据量
     }
   },
@@ -104,9 +104,11 @@ export default {
         pageSize:this.pagesize,
         nowPage:this.currentPage
       },'/cinema/getCinemas',(res)=> {
+        // console.log(res);
         this.cinemaList = res.data;
         this.currentPage = res.nowPage;
-        this.totalLength = res.totalPage
+        this.totalLength = res.totalPage*this.pagesize;
+
       })
     },
     // 改变每页数据

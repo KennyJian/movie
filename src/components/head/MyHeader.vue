@@ -14,7 +14,6 @@
             v-for="(item, index) in navList"
             :key="index"
             :class="{active:$route.path == item.src}"
-
           >{{item.label}}</router-link>
         </div>
       </div>

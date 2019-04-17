@@ -13,7 +13,7 @@ Vue.component(Upload.name, Upload);
 // Vue.use(Pagination);
 // Vue.use(Upload);
 //时间戳转换
-import {formatDate ,dateFtt} from './common/utils'
+import { formatDate ,dateFtt } from './common/utils'
 Vue.prototype.$formatDate=formatDate
 Vue.prototype.$dateFtt=dateFtt
 

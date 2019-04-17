@@ -81,7 +81,7 @@ export const removeStore = name => {
   };
 
   //时间戳转化
-  export function dateFtt(str,time){
+  export function dateFtt (str,time){
       var date=new Date(time*1000);
       var o = {
         "y+" : date.getFullYear(),                //年
