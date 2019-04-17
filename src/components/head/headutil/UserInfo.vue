@@ -36,7 +36,7 @@ export default {
       this.show = false;
     },
     getUser() {
-      this.$api.post({Authorization : "Bearer " + getCookie("key")},'/user/getUserInfo', (res)=> {
+      this.$api.post({},"/user/getUserInfo", (res)=> {
         if(res.data) {
           this.ISLOGIN = true;
           let user = res.imgPre + res.data.headUrl;

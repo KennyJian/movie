@@ -12,6 +12,7 @@
           <el-upload
           class="uploadImg"
           action="http://www.chong10010.cn:8088/user/upload"
+          :data="headImgFile"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -23,7 +24,7 @@
         <!-- 昵称 -->
         <div class="content_name">
           <label for>昵称：</label>
-          <input :v-model="name" type="text">
+          <input v-model="name" type="text">
         </div>
 
         <div class="content_phone">
@@ -127,7 +128,7 @@ export default {
         that.month = date[1];
         that.day = date[2];
         that.sex = res.data.userSex;
-        that.status = res.data.status;
+        that.status = res.data.lifeState;
         that.biography = res.data.biography;
       });
     },
@@ -154,7 +155,7 @@ export default {
       })
     },
     data() {
-      this.date = this.year + this.month + this.day;
+      this.date = this.year + "-" + this.month + "-" + this.day;
     },
     // 上传图片
      handleAvatarSuccess(res, file) {
@@ -166,6 +167,16 @@ export default {
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 1MB!');
         }
+        this.$api.post({
+          headImgFile:file,
+        },"/user/upload",(res) => {
+          console.log(res);
+          if(res.status == 200) {
+            alert("上传成功");
+          } else {
+            alert(res.msg)
+          }
+        })
         return  isLt2M;
       }
 

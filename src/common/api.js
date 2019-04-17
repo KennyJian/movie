@@ -1,5 +1,6 @@
 // 配置API接口地址
 var root = 'http://www.chong10010.cn:8088'
+// var root = 'http://127.0.0.1:8080'
 var qs = require('querystring')   // qs序列化，解决data传参，后台无法接受的问题
 // 引用axios
 import axios from 'axios'

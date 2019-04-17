@@ -3,15 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Pagination, Upload} from 'element-ui'
+import { Pagination, Upload, Dialog, Button} from 'element-ui'
 import Api from './common/api'
 
 Vue.config.productionTip = false
 
 Vue.component(Pagination.name, Pagination);
 Vue.component(Upload.name, Upload);
+Vue.component(Dialog.name, Dialog);
+Vue.component(Button.name, Button);
 // Vue.use(Pagination);
 // Vue.use(Upload);
+// Vue.use(MessageBox);
 //时间戳转换
 import { formatDate ,dateFtt } from './common/utils'
 Vue.prototype.$formatDate=formatDate
