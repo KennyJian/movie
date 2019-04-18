@@ -45,6 +45,12 @@
           </div>
         </div>
       </div>
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        layout="prev, pager, next"
+        :page-count="currentPage">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -57,12 +63,24 @@ export default {
       orderList:[],
       qrCodeImg:'',
       centerDialogVisible: false,
-      selectItem:''
+      selectItem:'',
+      currentPage:1, //初始页
     }
   },
   methods: {
     getList() {
       this.$api.post({},"/order/getOrderInfo", (res)=> {
+        if(res.status == 200) {
+          this.orderList = {...res.data};
+          this.currentPage=res.totalPage;
+          console.log(this.orderList);
+        }
+      })
+    },
+    handleCurrentChange(currentPage){
+      this.$api.post({
+        nowPage:currentPage
+      },"/order/getOrderInfo", (res)=> {
         if(res.status == 200) {
           this.orderList = {...res.data};
           console.log(this.orderList);

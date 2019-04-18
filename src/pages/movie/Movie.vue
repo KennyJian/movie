@@ -46,15 +46,10 @@
     <div class="movie_bottom">
       <el-pagination
         background
-        prev-text="上一页"
-        next-text="下一页"
-        @size-change="handleSizeChange"
-        @current-change="currentChange"
-        :current-page="currentPage"
-        :page-size="pagesize"
+        @current-change="handleCurrentChange"
         layout="prev, pager, next"
-        :total="totalLength"
-      ></el-pagination>
+        :page-count="pageCount">
+      </el-pagination>
     </div>
     </div>
   </div>
@@ -83,10 +78,9 @@ export default {
       catId:'99',
       sourceId:'99',
       yearId:'99',
-      currentPage:1,//当前页
-      totalLength:-1, //数据总量
-      pagesize:16, //每页的数据量
-      show:true //数据展示
+      pageCount:1,//当前页
+      pageSize:18,
+      show:true
     };
   },
   methods: {
@@ -119,6 +113,31 @@ export default {
       }
       this.getmovieList();
     },
+    handleCurrentChange(currentPage){
+      this.$api.get(
+        {
+          showType:this.showType,
+          sortId:this.sortId,
+          catId:this.catId,
+          sourceId:this.sourceId,
+          yearId:this.yearId,
+          pageSize:this.pageSize,
+          nowPage:currentPage
+        },
+        "/film/getFilms",
+        (res) => {
+          if(res.data != 0) {
+            this.show = true;
+            this.movieList = { ...res.data };
+          } else {
+            this.show = false;
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    },
     // 传入搜索条件
     getmovieList() {
       this.$api.get(
@@ -127,13 +146,15 @@ export default {
           sortId:this.sortId,
           catId:this.catId,
           sourceId:this.sourceId,
-          yearId:this.yearId
+          yearId:this.yearId,
+          pageSize:this.pageSize,
         },
         "/film/getFilms",
         (res) => {
           if(res.data != 0) {
             this.show = true;
             this.movieList = { ...res.data };
+            this.pageCount=res.totalPage;
           } else {
             this.show = false;
           }
