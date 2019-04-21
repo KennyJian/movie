@@ -10,7 +10,7 @@
         </div>
         <div class="item_right">
           <p class="cinema_price">￥{{item.minimumPrice}}<span>起</span></p>
-          <p class="cinema_select">选座购票</p>
+          <p class="cinema_select" @click="getDetail(item.uuid)">选座购票</p>
         </div>
       </div>
     </div>
@@ -104,7 +104,7 @@ export default {
         pageSize:this.pagesize,
         nowPage:this.currentPage
       },'/cinema/getCinemas',(res)=> {
-        // console.log(res);
+        console.log(res);
         this.cinemaList = res.data;
         this.currentPage = res.nowPage;
         this.totalLength = res.totalPage*this.pagesize;
@@ -120,6 +120,12 @@ export default {
       this.currentPage = currentPage;
       this.first_row = (currentPage - 1) * this.pagesize;
       this.getcinema();
+    },
+    getDetail(id) {
+      this.$router.push({
+        path:"/cinemadetails",
+        query:{cinemaId:id}
+      })
     }
   },
   mounted() {
@@ -172,6 +178,7 @@ export default {
           }
         }
         .cinema_select {
+          cursor: pointer;
           display: inline-block;
           width: 80px;
           height: 30px;

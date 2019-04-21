@@ -29,7 +29,7 @@
       </div>
       <!-- 电影列表 -->
       <div v-if="show" class="movie_list">
-        <div class="list_item" v-for="(item,index) of movieList" :key="index">
+        <div class="list_item" @click="getDetail(item.filmId)" v-for="(item,index) of movieList" :key="index">
           <div class="item_img">
             <img :src="item.imgAddress" alt>
           </div>
@@ -178,6 +178,12 @@ export default {
       this.currentPage = currentPage;
       this.first_row = (currentPage - 1) * this.pagesize;
       this.getcinema();
+    },
+    getDetail(id) {
+      this.$router.push({
+        path:"/details",
+        query:{filmId:id}
+      })
     }
   },
   mounted() {
@@ -232,6 +238,7 @@ export default {
       width: 160px;
       margin-top: 30px;
       display: inline-block;
+      cursor: pointer;
       .list_img {
         width: 160px;
         height: 220px;
