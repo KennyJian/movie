@@ -4,7 +4,7 @@
       <p v-if="type" class="leaderboard_title">今日票房</p>
       <p v-else class="expect leaderboard_title">最受期待</p>
       <div class="content">
-        <div id="list_item" v-for="(item,index) of list" :key="index">
+        <div id="list_item" @click="getDetail(item.filmId)" v-for="(item,index) of list" :key="index">
           <div v-if="index ==0" class="item_top">
             <img :src="item.imgAddress" alt>
             <div class="top_right">
@@ -34,6 +34,14 @@ export default {
     list:{},
     type: {
       type:Boolean
+    }
+  },
+  methods:{
+     getDetail(id) {
+      this.$router.push({
+        path:"/cinemadetails",
+        query:{cinemaId:id}
+      });
     }
   }
 };

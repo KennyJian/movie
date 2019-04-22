@@ -9,7 +9,7 @@
         </span>
       </div>
       <div class="item_list">
-        <div class="movie_list" v-for="(item, index) of movielist.filmInfoList" :key="index">
+        <div class="movie_list" @click="getDetail(item.filmId)" v-for="(item, index) of movielist.filmInfoList" :key="index">
           <div class="list_head">
             <img :src="item.imgAddress" :alt="item.filmName">
             <div class="message">
@@ -32,7 +32,7 @@
         </span>
       </div>
       <div class="item_list">
-        <div class="movie_list" v-for="(item, index) of movielist.filmInfoList" :key="index">
+        <div class="movie_list" @click="getDetail(item.filmId)" v-for="(item, index) of movielist.filmInfoList" :key="index">
           <div class="list_head">
             <img :src="item.imgAddress" :alt="item.filmName">
             <div class="message">
@@ -65,7 +65,12 @@ export default {
     }
   },
   methods: {
-
+    getDetail(id) {
+      this.$router.push({
+        path:"/details",
+        query:{filmId:id}
+      })
+    }
   },
   mounted() {
 
@@ -100,6 +105,7 @@ export default {
     .item_list {
       margin-top: 15px;
       .movie_list {
+        cursor: pointer;
         display: inline-block;
         width: 160px;
         height: 260px;
