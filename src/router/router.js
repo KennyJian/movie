@@ -47,13 +47,20 @@ const router = [
       title: '电影详情'
     }
   },
-
   {
     path: '/cinemadetails',
     name: 'Cdetails',
     component: resolve => require(['@/pages/cinema/CinemaDetails'], resolve),
     meta: {
       title: '影院详情'
+    }
+  },
+  {
+    path: '/sxeat',
+    name: 'sxeat',
+    component: resolve => require(['@/pages/sxeat/index'], resolve),
+    meta: {
+      title: '选择座位'
     }
   },
   {
@@ -74,14 +81,6 @@ const router = [
         component: resolve => require(['@/pages/personCenter/Order'], resolve),
         meta: {
           title: '我的订单'
-        }
-      },
-      {
-        path: '/xseats',
-        name: 'xaests',
-        component: resolve => require(['@/pages/xseat/index'], resolve),
-        meta: {
-          title: '选择座位'
         }
       }
     ]

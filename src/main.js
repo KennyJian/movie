@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { Pagination, Upload, Dialog, Button} from 'element-ui'
+import { Pagination, Upload, Dialog, Button,Table } from 'element-ui'
 import Api from './common/api'
 
 Vue.config.productionTip = false
@@ -12,6 +12,7 @@ Vue.component(Pagination.name, Pagination);
 Vue.component(Upload.name, Upload);
 Vue.component(Dialog.name, Dialog);
 Vue.component(Button.name, Button);
+Vue.component(Table.name, Table);
 // Vue.use(Pagination);
 // Vue.use(Upload);
 // Vue.use(MessageBox);
