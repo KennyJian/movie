@@ -34,7 +34,7 @@
                   >
                     <img src="../../../static/imgs/selectable-seat.png" alt>
                   </div>
-                  <div v-show="clumn.sold == 2" class="seat_unselect">
+                  <div @click="deleteSeat(clumn.seatId,clumn.row,clumn.column)" v-show="clumn.sold == 2" class="seat_unselect">
                     <img src="../../../static/imgs/selected-seat.png" alt>
                   </div>
                   <div v-show="clumn.sold == 3 " class="seat_unselect">
@@ -92,8 +92,17 @@
                 座位:
                 <span v-show="!select">一次最多选6个座位</span>
               </p>
-              <div  v-show="select" class="sxeat_item"  v-for="(item,index) of selectSingle" :key="index">
-                <img @click="deleteSeat(item.seatId,item.row,item.column)" src="../../../static/imgs/icon-close.png" alt>
+              <div
+                v-show="select"
+                class="sxeat_item"
+                v-for="(item,index) of selectSingle"
+                :key="index"
+              >
+                <img
+                  @click="deleteSeat(item.seatId,item.row,item.column)"
+                  src="../../../static/imgs/icon-close.png"
+                  alt
+                >
                 <p>{{item.row}}排{{item.column}}座</p>
               </div>
             </div>
@@ -161,25 +170,24 @@ export default {
       });
     },
     // 选择座位
-    selectSeat(row,column,index,id) {
+    selectSeat(row, column, index, id) {
       this.select = true;
-      this.single[index][column-1].sold = 2;
-      this.selectSingle.push({"row":row,"column":column,"seatId":id});
-      this.totalPrice = this.selectSingle.length*this.hallInfo.price;
+      this.single[index][column - 1].sold = 2;
+      this.selectSingle.push({ row: row, column: column, seatId: id });
+      this.totalPrice = this.selectSingle.length * this.hallInfo.price;
     },
     // 删除座位
-    deleteSeat(id,row,column) {
-      console.log(123);
-      for(let i=0; i < this.selectSingle.length; i++) {
-        if(i.seatId == id) {
-          console.log(i.seatId);
-          this.selectSingle.splice(i,1);
+    deleteSeat(id, row, column) {
+      for (let i = 0; i < this.selectSingle.length; i++) {
+        if (this.selectSingle[i].seatId == id) {
+          this.selectSingle.splice(i, 1);
           console.log(this.selectSingle);
         } else {
           continue;
         }
-        this.single[row-1][column-1].sold = 1;
       }
+      this.single[row-1][column-1].sold =1;
+       this.totalPrice = this.selectSingle.length * this.hallInfo.price;
     }
   },
   mounted() {
