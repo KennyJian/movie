@@ -3,9 +3,9 @@
     <div class="content">
       <!-- 菜单左边 -->
       <div class="left">
-<!--        <div class="logo" @click="routerto">-->
-<!--          <img src="../../../static/imgs/logo.jpg" alt="logo">-->
-<!--        </div>-->
+        <div class="logo" @click="routerto">
+          <img src="../../../static/imgs/logo.jpg" alt="logo">
+        </div>
         <my-city></my-city>
         <div class="tabs_wrap">
           <router-link

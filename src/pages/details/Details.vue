@@ -109,7 +109,7 @@
       <div class="movie_relevant">
         <div class="intro_head">相关电影</div>
         <div class="relevant_content">
-          <div class="relevant_item" v-for="(rele,index) of recommends" :key="index">
+          <div class="relevant_item" @click="getDetail(rele.uuid)" v-for="(rele,index) of recommends" :key="index">
             <div class="relevant_img">
               <img :src="rele.imgAddress" alt>
             </div>
@@ -123,6 +123,7 @@
 
 <script>
 export default {
+  inject:['reload'],
   data() {
     return {
       movieImg: "",
@@ -166,6 +167,13 @@ export default {
     },
     selectShow(item) {
       this.selected = item;
+    },
+    getDetail(id) {
+      this.$router.push({
+        path:"/details",
+        query:{filmId:id}
+      })
+      this.reload();
     }
   },
   mounted() {

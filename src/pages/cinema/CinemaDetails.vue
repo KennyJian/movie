@@ -56,6 +56,7 @@
         <div class="session_content">
           <div class="content_item" v-for="(item,index) of filmList[selected].filmFields" :key="index">
             <p>
+              {{item.beginDate}}
               {{item.beginTime}}
               <span>{{item.endTime}}散场</span>
             </p>

@@ -194,4 +194,8 @@ export default {
       }
     }
   }
+  .el-pager li:hover {
+    color: blue;
+  }
+
 </style>

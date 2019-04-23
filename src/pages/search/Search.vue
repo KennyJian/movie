@@ -7,7 +7,7 @@
       </div>
     </div>
     <div v-if="searchReturn" class="search_content">
-      <div class="content_item" v-for="item of searchList" :key="item.filmId">
+      <div class="content_item" @click="getDetail(item.filmId)" v-for="item of searchList" :key="item.filmId">
         <div class="movie_img">
           <img :src="item.filmImg" alt>
         </div>
@@ -76,6 +76,12 @@ export default {
           console.log(error);
         }
       );
+    },
+    getDetail(id) {
+      this.$router.push({
+        path:"/details",
+        query:{filmId:id}
+      })
     },
     // 改变每页数据
     handleSizeChange:function(size) {

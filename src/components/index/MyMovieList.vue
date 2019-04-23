@@ -39,8 +39,8 @@ export default {
   methods:{
      getDetail(id) {
       this.$router.push({
-        path:"/cinemadetails",
-        query:{cinemaId:id}
+        path:"/details",
+        query:{filmId:id}
       });
     }
   }

@@ -9,16 +9,16 @@
         </span>
       </div>
       <div class="item_list">
-        <div class="movie_list" @click="getDetail(item.filmId)" v-for="(item, index) of movielist.filmInfoList" :key="index">
+        <div class="movie_list"  v-for="(item, index) of movielist.filmInfoList" :key="index">
           <div class="list_head">
-            <img :src="item.imgAddress" :alt="item.filmName">
+            <img :src="item.imgAddress" :alt="item.filmName" @click="getDetail(item.filmId)">
             <div class="message">
               <span class="movie_name">{{item.filmName}}</span>
               <span class="score">{{item.filmScore}}</span>
             </div>
           </div>
           <div class="list_bottom">
-            <a href="#">购票</a>
+            <router-link to="/cinema">购票</router-link>
           </div>
         </div>
       </div>
@@ -32,9 +32,9 @@
         </span>
       </div>
       <div class="item_list">
-        <div class="movie_list" @click="getDetail(item.filmId)" v-for="(item, index) of movielist.filmInfoList" :key="index">
+        <div class="movie_list"  v-for="(item, index) of movielist.filmInfoList" :key="index">
           <div class="list_head">
-            <img :src="item.imgAddress" :alt="item.filmName">
+            <img :src="item.imgAddress" :alt="item.filmName" @click="getDetail(item.filmId)">
             <div class="message">
               <span class="movie_name">{{item.filmName}}</span>
             </div>
@@ -43,7 +43,7 @@
             <div class="number">{{item.expectNum}}人想看</div>
             <div class="options">
               <p class="trailer">预告片</p>
-              <p class="pre_sale">预售</p>
+              <p class="pre_sale" @click="goCiemea()">预售</p>
             </div>
           </div>
         </div>
@@ -69,6 +69,11 @@ export default {
       this.$router.push({
         path:"/details",
         query:{filmId:id}
+      })
+    },
+    goCiemea(){
+      this.$router.push({
+        path:"/cinema"
       })
     }
   },
