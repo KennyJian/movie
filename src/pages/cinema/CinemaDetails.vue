@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="light_intro">
-        <p class="light_name">{{filmList[selected].filmName}}</p>
+        <!-- <p class="light_name">{{filmList[selected].filmName}}</p>
         <p class="light_time">
           时长：
           <span>{{filmList[selected].filmLength}}</span>
@@ -43,7 +43,7 @@
         <p class="light_actors">
           演员：
           <span>{{filmList[selected].actors}}</span>
-        </p>
+        </p> -->
       </div>
       <div class="cinema_Session">
         <div class="session_title">
@@ -54,7 +54,11 @@
           <p>选座购票</p>
         </div>
         <div class="session_content">
-          <div class="content_item" v-for="(item,index) of filmList[selected].filmFields" :key="index">
+          <div
+            class="content_item"
+            v-for="(item,index) of filmList[selected].filmFields"
+            :key="index"
+          >
             <p>
               {{item.beginDate}}
               {{item.beginTime}}
@@ -74,7 +78,7 @@
 </template>
 
 <script>
-import {getCookie} from '@/common/utils'
+import { getCookie } from "@/common/utils";
 export default {
   data() {
     return {
@@ -99,6 +103,7 @@ export default {
           let data = res.data;
           if (res.status == 200) {
             that.cinemaImg = res.imgPre + data.cinemaInfo.imgUrl;
+            console.log(that.cinemaImg);
             that.cinemaName = data.cinemaInfo.cinemaName;
             that.cinemaAddress = data.cinemaInfo.cinemaAddress;
             that.cinemaPhone = data.cinemaInfo.cinemaPhone;
@@ -111,19 +116,18 @@ export default {
         }
       );
     },
-    changeFilm(index,id) {
+    changeFilm(index, id) {
       this.selected = index;
-
     },
     goSext(id) {
       var that = this;
-      if(getCookie(key) != '') {
-      this.$router.push({
-        path:'/sxeat',
-        query:{cinemaId:that.cinemaId,field:id}
-      })
+      if (getCookie("key") != "") {
+        this.$router.push({
+          path: "/sxeat",
+          query: { cinemaId: that.cinemaId, field: id }
+        });
       } else {
-        this.$router.push("/login")
+        this.$router.push("/login");
       }
     }
   },
