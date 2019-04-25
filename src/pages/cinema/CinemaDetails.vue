@@ -87,7 +87,9 @@ export default {
       cinemaPhone: "", //影院电话
       cinemaAddress: "", //影院地址
       filmList: [], //电影列表
-      selected: 0 //选择的电影
+      selected: 0, //选择的电影
+
+
     };
   },
   methods: {
@@ -102,12 +104,10 @@ export default {
           let data = res.data;
           if (res.status == 200) {
             that.cinemaImg = res.imgPre + data.cinemaInfo.imgUrl;
-            console.log(that.cinemaImg);
             that.cinemaName = data.cinemaInfo.cinemaName;
             that.cinemaAddress = data.cinemaInfo.cinemaAddress;
             that.cinemaPhone = data.cinemaInfo.cinemaPhone;
             that.filmList = { ...data.filmList };
-            console.log(res);
           }
         },
         error => {
@@ -123,7 +123,7 @@ export default {
       if (getCookie("key") != "") {
         this.$router.push({
           path: "/sxeat",
-          query: { cinemaId: that.cinemaId, field: id }
+          query: {  field: id }
         });
       } else {
         this.$router.push("/login");

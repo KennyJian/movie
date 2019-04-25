@@ -34,7 +34,11 @@
                   >
                     <img src="../../../static/imgs/selectable-seat.png" alt>
                   </div>
-                  <div @click="deleteSeat(clumn.seatId,clumn.row,clumn.column)" v-show="clumn.sold == 2" class="seat_unselect">
+                  <div
+                    @click="deleteSeat(clumn.seatId,clumn.row,clumn.column)"
+                    v-show="clumn.sold == 2"
+                    class="seat_unselect"
+                  >
                     <img src="../../../static/imgs/selected-seat.png" alt>
                   </div>
                   <div v-show="clumn.sold == 3 " class="seat_unselect">
@@ -118,7 +122,7 @@
         </div>
         <div class="select_enter">
           <div v-if="!select" class="xseat_button">确认选座</div>
-          <div v-else class="xseat_button button_enter">确认选座</div>
+          <div v-else @click="submitOrder" class="xseat_button button_enter">确认选座</div>
         </div>
       </div>
     </div>
@@ -130,6 +134,7 @@ import axio from "axios";
 export default {
   data() {
     return {
+      fieldId: "",
       xseat: "",
       select: false,
       cinemaInfo: {},
@@ -141,27 +146,26 @@ export default {
       totalPrice: 0, //总价
       ids: [], //ids
       single: [], //座位
-      selectSingle: [] //被选择的座位
+      selectSingle: [], //被选择的座位
+      selectSeats: "", //选择的座位id
+      seatsName: "" //选择的座位
     };
   },
   methods: {
-    getXseat(cinemaId, filedId) {
+    getXseat(filedId) {
       var that = this;
-      this.$api.post(
-        { cinemaId: cinemaId, fieldId: filedId },
-        "/cinema/getFieldInfo",
-        res => {
-          let data = res.data;
-          if (res.status == 200) {
-            that.cinemaInfo = { ...data.cinemaInfo };
-            that.filmInfo = { ...data.filmInfo };
-            that.hallInfo = { ...data.hallInfo };
-            that.xseat = res.imgPre + res.data.hallInfo.seatFile;
-            that.beginDate = data.beginTime;
-          }
+      this.$api.post({ fieldId: filedId }, "/cinema/getFieldInfo", res => {
+        let data = res.data;
+        if (res.status == 200) {
+          that.cinemaInfo = { ...data.cinemaInfo };
+          that.filmInfo = { ...data.filmInfo };
+          that.hallInfo = { ...data.hallInfo };
+          that.xseat = res.imgPre + res.data.hallInfo.seatFile;
+          that.beginDate = data.beginTime;
         }
-      );
+      });
     },
+    // 获取座位信息
     getdata() {
       var that = this;
       axio.get("../../../static/json/cgs.json").then(res => {
@@ -175,6 +179,8 @@ export default {
       this.single[index][column - 1].sold = 2;
       this.selectSingle.push({ row: row, column: column, seatId: id });
       this.totalPrice = this.selectSingle.length * this.hallInfo.price;
+      this.selectSeats += id + ",";
+      this.seatsName += "第" + row + "排" + "第" + column + "座,";
     },
     // 删除座位
     deleteSeat(id, row, column) {
@@ -186,14 +192,33 @@ export default {
           continue;
         }
       }
-      this.single[row-1][column-1].sold =1;
-       this.totalPrice = this.selectSingle.length * this.hallInfo.price;
+      this.selectSeats.replace(id + ",", "");
+      this.seatsName.replace("第" + row + "排" + "第" + column + "座,", "");
+      this.single[row - 1][column - 1].sold = 1;
+      this.totalPrice = this.selectSingle.length * this.hallInfo.price;
+    },
+    submitOrder() {
+      var that = this;
+      this.$api.post(
+        {
+          fieldId: that.fieldId,
+          soldSeats: that.selectSeats,
+          seatsName: that.seatsName
+        },
+        "/order/buyTickets",
+        (res)=> {
+          if(res.status == 200) {
+            this.$router.push("/order");
+          }else {
+            console.log(res.message);
+          }
+        }
+      );
     }
   },
   mounted() {
-    var cinemaId = this.$route.query.cinemaId;
-    var fieldId = this.$route.query.field;
-    this.getXseat(cinemaId, fieldId);
+    this.fieldId = this.$route.query.field;
+    this.getXseat(this.fieldId);
     this.getdata();
   }
 };
