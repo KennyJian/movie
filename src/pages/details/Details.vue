@@ -80,7 +80,23 @@
           <div class="intor_comment">
             <div class="comment_head">
               <div class="intro_head">热门短评</div>
-              <div class="commit_button">写短评</div>
+              <review @commit="review" :filmId="filmId"></review>
+            </div>
+            <div class="comment_content">
+              <div class="comment_item" v-for="(item,index) of comment" :key="index">
+                <div class="item_head">
+                  <div class="commit_img">
+                    <img :src="imgUrl+item.headUrl" alt>
+                  </div>
+                  <div class="commit_intro">
+                    <span>{{item.userName}}</span>
+                    <p>{{item.createTime}}</p>
+                  </div>
+                </div>
+                <div class="item_content">
+                  <p>{{item.comment}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -122,7 +138,11 @@
 </template>
 
 <script>
+import Review from "@/components/reviews/review"
 export default {
+  components:{
+    Review
+  },
   inject:['reload'],
   data() {
     return {
@@ -137,6 +157,7 @@ export default {
           id: 2
         }
       ],
+      filmId:'',
       selected: 1,
       filmName: "", //电影名称
       inforClass: "", //电影类型
@@ -144,7 +165,9 @@ export default {
       inforDate: "", //电影时间
       filmR: {}, //电影相关
       recommends: {}, //相关电影
-      actors: [] //演员
+      actors: [], //演员
+      comment: [], //评论
+      imgUrl: "ftp://www.chong10010.cn/pub/temp" //图片地址头部
     };
   },
   methods: {
@@ -161,12 +184,15 @@ export default {
           that.filmR = { ...data.info04 };
           that.recommends = { ...data.recommends };
           that.actors = { ...data.info04.actors.actors };
-          console.log(res);
+          that.comment = { ...data.comments };
         }
       });
     },
     selectShow(item) {
       this.selected = item;
+    },
+    review(res) {
+
     },
     getDetail(id) {
       this.$router.push({
@@ -177,8 +203,8 @@ export default {
     }
   },
   mounted() {
-    let id = this.$route.query.filmId;
-    this.getFilm(id);
+    this.filmId = this.$route.query.filmId;
+    this.getFilm(this.filmId);
   }
 };
 </script>
@@ -381,6 +407,65 @@ export default {
             }
             .aside_item:nth-child(n + 3) {
               margin-top: 6px;
+            }
+          }
+        }
+      }
+      .intor_comment {
+        margin-top: 20px;
+        .comment_head {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .commit_button {
+            cursor: pointer;
+            height: 30px;
+            padding: 0 10px;
+            border-radius: 15px;
+            border: 1px solid #ef4238;
+            text-align: center;
+            font-size: 14px;
+            line-height: 30px;
+            color: #ef4238;
+          }
+        }
+        .comment_content {
+          .comment_item {
+            margin-top: 20px;
+            .item_head {
+              display: flex;
+              .commit_img {
+                width: 50px;
+                height: 50px;
+                border-radius: 30px;
+                img {
+                  width: 100%;
+                  height: 100%;
+                  border-radius: 30px;
+                }
+              }
+              .commit_intro {
+                vertical-align: middle;
+                color: #333;
+                font-size: 16px;
+                margin-left: 5px;
+                span {
+                  display: block;
+                }
+                p {
+                  margin-top: 2px;
+                  color: #999;
+                }
+              }
+            }
+            .item_content {
+              margin-top: 20px;
+              padding-bottom: 30px;
+              border-bottom: 1px solid #e5e5e5;
+              color: #666;
+              line-height: 26px;
+              font-size: 14px;
+              margin-left: 55px;
             }
           }
         }
