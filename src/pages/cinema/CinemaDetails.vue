@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="light_intro">
-        <!-- <p class="light_name">{{filmList[selected].filmName}}</p>
+        <p class="light_name">{{filmList[selected].filmName}}</p>
         <p class="light_time">
           时长：
           <span>{{filmList[selected].filmLength}}</span>
@@ -43,9 +43,15 @@
         <p class="light_actors">
           演员：
           <span>{{filmList[selected].actors}}</span>
-        </p> -->
+        </p>
       </div>
       <div class="cinema_Session">
+        <div class="session_date">
+          <p>
+            观影时间：
+            <span>{{movieDate}}</span>
+          </p>
+        </div>
         <div class="session_title">
           <p>放映时间</p>
           <p>语言版本</p>
@@ -88,8 +94,7 @@ export default {
       cinemaAddress: "", //影院地址
       filmList: [], //电影列表
       selected: 0, //选择的电影
-
-
+      movieDate: ""
     };
   },
   methods: {
@@ -108,6 +113,11 @@ export default {
             that.cinemaAddress = data.cinemaInfo.cinemaAddress;
             that.cinemaPhone = data.cinemaInfo.cinemaPhone;
             that.filmList = { ...data.filmList };
+            that.movieDate = that.filmList[
+              that.selected
+            ].filmFields[0].beginDate
+              .substring(5, 10)
+              .replace("-", "月");
           }
         },
         error => {
@@ -117,13 +127,16 @@ export default {
     },
     changeFilm(index, id) {
       this.selected = index;
+      this.movieDate = this.filmList[this.selected].filmFields[0].beginDate
+        .substring(5, 10)
+        .replace("-", "月");
     },
     goSext(id) {
       var that = this;
       if (getCookie("key") != "") {
         this.$router.push({
           path: "/sxeat",
-          query: {  field: id }
+          query: { field: id }
         });
       } else {
         this.$router.push("/login");
@@ -241,6 +254,18 @@ export default {
   }
   .cinema_Session {
     margin-top: 20px;
+    .session_date {
+      margin-bottom: 20px;
+      p {
+        font-size: 14px;
+        color: #999;
+        span {
+          color: #333;
+          padding: 2px 10px;
+          // margin-left: 12px;
+        }
+      }
+    }
     .session_title {
       display: flex;
       align-items: center;
