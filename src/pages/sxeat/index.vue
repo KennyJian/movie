@@ -136,7 +136,7 @@ export default {
     return {
       fieldId: "",
       xseat: "",
-      select: false,
+      select: false, //
       cinemaInfo: {},
       filmInfo: {},
       hallInfo: {},
@@ -148,7 +148,8 @@ export default {
       single: [], //座位
       selectSingle: [], //被选择的座位
       selectSeats: "", //选择的座位id
-      seatsName: "" //选择的座位
+      seatsName: "", //选择的座位
+      soldSeats: [] //已售出的位置
     };
   },
   methods: {
@@ -157,13 +158,25 @@ export default {
       this.$api.post({ fieldId: filedId }, "/cinema/getFieldInfo", res => {
         let data = res.data;
         if (res.status == 200) {
+          console.log(res);
           that.cinemaInfo = { ...data.cinemaInfo };
           that.filmInfo = { ...data.filmInfo };
           that.hallInfo = { ...data.hallInfo };
           that.xseat = res.imgPre + res.data.hallInfo.seatFile;
           that.beginDate = data.beginTime;
+          that.changeSold();
         }
       });
+    },
+    // 显示已经卖出去的座位
+    changeSold() {
+      let soldSeats = this.hallInfo.soldSeats;
+      let soldArr = soldSeats.split(",");
+      for(let i=0; i<soldArr.length; i++) {
+        let row = Math.floor(soldArr[i]/6);
+        let column = soldArr[i]%6;
+        this.single[row][column].sold =3;
+      }
     },
     // 获取座位信息
     getdata() {
@@ -206,10 +219,10 @@ export default {
           seatsName: that.seatsName
         },
         "/order/buyTickets",
-        (res)=> {
-          if(res.status == 200) {
+        res => {
+          if (res.status == 200) {
             this.$router.push("/order");
-          }else {
+          } else {
             console.log(res.message);
           }
         }
@@ -422,6 +435,7 @@ export default {
         background-color: #dedede;
       }
       .button_enter {
+        cursor: pointer;
         background-color: #f03d37;
         color: #fff;
       }
