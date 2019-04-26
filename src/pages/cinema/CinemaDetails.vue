@@ -10,6 +10,7 @@
         <p class="cinema_time">电话：{{cinemaPhone}}</p>
       </div>
     </div>
+    <div v-if="flag">
     <div class="details_content">
       <div class="movie_light">
         <div class="movie_arrow">
@@ -34,7 +35,7 @@
         <p class="light_name">{{filmList[selected].filmName}}</p>
         <p class="light_time">
           时长：
-          <span>{{filmList[selected].filmLength}}</span>
+          <span>{{filmList[selected].filmLength}}分钟</span>
         </p>
         <p class="light_class">
           类型：
@@ -46,12 +47,12 @@
         </p>
       </div>
       <div class="cinema_Session">
-        <div class="session_date">
-          <p>
-            观影时间：
-            <span>{{movieDate}}</span>
-          </p>
-        </div>
+<!--        <div class="session_date">-->
+<!--          <p>-->
+<!--            观影时间：-->
+<!--            <span>{{movieDate}}</span>-->
+<!--          </p>-->
+<!--        </div>-->
         <div class="session_title">
           <p>放映时间</p>
           <p>语言版本</p>
@@ -80,6 +81,8 @@
         </div>
       </div>
     </div>
+    </div>
+    <div v-else class="no_film">该影院暂无场次</div>
   </div>
 </template>
 
@@ -95,7 +98,8 @@ export default {
       cinemaAddress: "", //影院地址
       filmList: [], //电影列表
       selected: 0, //选择的电影
-      movieDate: ""
+      movieDate: "",
+      flag:false
     };
   },
   methods: {
@@ -108,6 +112,7 @@ export default {
         "/cinema/getFields",
         res => {
           let data = res.data;
+          console.log(res)
           if (res.status == 200) {
             that.cinemaImg = res.imgPre + data.cinemaInfo.imgUrl;
             that.cinemaName = data.cinemaInfo.cinemaName;
@@ -119,6 +124,9 @@ export default {
             ].filmFields[0].beginDate
               .substring(5, 10)
               .replace("-", "月");
+          }
+          if (that.filmList.length!=[]){
+            that.flag=true
           }
         },
         error => {
@@ -328,5 +336,10 @@ export default {
       }
     }
   }
+}
+.no_film {
+  margin: 100px 0 0 500px;
+  font-size: 20px;
+  color: #ed3931;
 }
 </style>

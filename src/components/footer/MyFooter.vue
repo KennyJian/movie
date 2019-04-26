@@ -1,38 +1,37 @@
 <template>
   <div class="footer">
     <p class="friendly-links">
-        关于猫眼 :
-        <a href="http://ir.maoyan.com/s/index.php#pageScroll0" target="_blank">关于我们</a>
+        关于我 :
+        <a href="http://www.just.edu.cn/" target="_blank">江苏科技大学</a>
         <span></span>
-        <a href="http://ir.maoyan.com/s/index.php#pageScroll1" target="_blank">管理团队</a>
+        <a href="http://szlg.just.edu.cn/" target="_blank">江苏科技大学苏州理工学院</a>
         <span></span>
-        <a href="http://ir.maoyan.com/s/index.php#pageScroll2" target="_blank">投资者关系</a>
-        &nbsp;&nbsp;&nbsp;&nbsp;
         友情链接 :
-        <a href="http://www.meituan.com" data-query="utm_source=wwwmaoyan" target="_blank">美团网</a>
+        <a href="http://www.zjg.gov.cn/index.html" target="_blank">中国张家港</a>
         <span></span>
-        <a href="http://i.meituan.com/client" data-query="utm_source=wwwmaoyan" target="_blank">美团下载</a>
+        <a href="https://github.com/KennyJian?tab=repositories" data-query="utm_source=wwwmaoyan" target="_blank">个人GitHub</a>
         <span></span>
-        <a href="https://www.huanxi.com" data-query="utm_source=maoyan_pc" target="_blank">欢喜首映</a>
+        <a href="https://www.jianshu.com/u/d21c3696a10e" data-query="utm_source=wwwmaoyan" target="_blank">个人博客</a>
+        <span></span>
     </p>
     <p class="friendly-links">
-      商务合作邮箱：v@maoyan.com
-      客服电话：10105335
+      商务合作邮箱：13424312860@163.com
+      客服电话：13424312860
       违法和不良信息举报电话：4006018900
       <br/>
-      投诉举报邮箱：tousujubao@meituan.com
-      舞弊线索举报邮箱：wubijubao@maoyan.com
+      投诉举报邮箱：13424312860@163.com
+      舞弊线索举报邮箱：13424312860@163.com
     </p>
     <p>
         &copy;2016
-        猫眼电影 maoyan.com
-        <a href="https://tsm.miit.gov.cn/pages/EnterpriseSearchList_Portal.aspx?type=0&keyword=京ICP证160733号&pageNo=1" target="_blank">京ICP证160733号</a>
-        <a href="http://www.miibeian.gov.cn" target="_blank">京ICP备16022489号-1</a>
-        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010102003232" target="_blank">京公网安备 11010102003232号</a>
+        江科大电影 www.chong10010.cn
+<!--        <a href="https://tsm.miit.gov.cn/pages/EnterpriseSearchList_Portal.aspx?type=0&keyword=京ICP证160733号&pageNo=1" target="_blank">京ICP证160733号</a>-->
+<!--        <a href="http://www.miibeian.gov.cn" target="_blank">京ICP备16022489号-1</a>-->
+<!--        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=11010102003232" target="_blank">京公网安备 11010102003232号</a>-->
         <a href="/about/licence" target="_blank">网络文化经营许可证</a>
         <a href="http://www.meituan.com/about/rules" target="_blank">电子公告服务规则</a>
     </p>
-    <p>北京猫眼文化传媒有限公司</p>
+    <p>余中键个人毕业设计</p>
 </div>
 </template>
 

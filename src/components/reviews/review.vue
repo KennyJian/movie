@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  inject:['reload'],
   name: "Review",
   props:{
     filmId:String
@@ -36,6 +37,7 @@ export default {
           if(res.status == 200) {
             alert("评论成功");
             that.hidden();
+            this.reload()
           }else {
             alert(res.msg);
           }

@@ -172,9 +172,19 @@ export default {
     changeSold() {
       let soldSeats = this.hallInfo.soldSeats;
       let soldArr = soldSeats.split(",");
+      console.log(soldArr.length)
       for(let i=0; i<soldArr.length; i++) {
-        let row = Math.floor(soldArr[i]/6);
-        let column = soldArr[i]%6;
+        let row,column;
+        if(Math.floor(soldArr[i]/6)==soldArr[i]/6){
+          row=Math.floor(soldArr[i]/6)-1
+        }else{
+          row=Math.floor(soldArr[i]/6)
+        }
+        if(soldArr[i]%6==0){
+          column=5
+        }else {
+          column=soldArr[i]%6-1
+        }
         this.single[row][column].sold =3;
       }
     },
@@ -192,8 +202,17 @@ export default {
       this.single[index][column - 1].sold = 2;
       this.selectSingle.push({ row: row, column: column, seatId: id });
       this.totalPrice = this.selectSingle.length * this.hallInfo.price;
-      this.selectSeats += id + ",";
-      this.seatsName += "第" + row + "排" + "第" + column + "座,";
+      if (this.selectSeats==""){
+        this.selectSeats += id
+      }else{
+        this.selectSeats = this.selectSeats+","+id
+      }
+      if (this.seatsName==""){
+        this.seatsName += "第" + row + "排" + "第" + column + "座";
+      }else{
+        this.seatsName += ",第" + row + "排" + "第" + column + "座";
+      }
+      console.log(this.selectSeats,this.seatsName)
     },
     // 删除座位
     deleteSeat(id, row, column) {
@@ -205,8 +224,23 @@ export default {
           continue;
         }
       }
-      this.selectSeats.replace(id + ",", "");
-      this.seatsName.replace("第" + row + "排" + "第" + column + "座,", "");
+      if (this.selectSeats==id){
+        this.selectSeats=this.selectSeats.replace(id, "");
+      }
+      else if (this.selectSeats.indexOf(id)==0){
+        this.selectSeats=this.selectSeats.replace(id+",", "");
+      }else{
+        this.selectSeats=this.selectSeats.replace(","+id, "");
+      }
+
+      if (this.seatsName=="第" + row + "排" + "第" + column + "座"){
+        this.seatsName=this.seatsName.replace("第" + row + "排" + "第" + column + "座", "");
+      }
+      else if (this.seatsName.indexOf("第" + row + "排" + "第" + column + "座")==0){
+        this.seatsName=this.seatsName.replace("第" + row + "排" + "第" + column + "座,", "");
+      }else{
+        this.seatsName=this.seatsName.replace(",第" + row + "排" + "第" + column + "座", "");
+      }
       this.single[row - 1][column - 1].sold = 1;
       this.totalPrice = this.selectSingle.length * this.hallInfo.price;
     },
@@ -221,9 +255,11 @@ export default {
         "/order/buyTickets",
         res => {
           if (res.status == 200) {
+            alert('购票成功')
             this.$router.push("/order");
           } else {
-            console.log(res.message);
+            alert(res.msg)
+            console.log(res.msg);
           }
         }
       );
@@ -270,7 +306,7 @@ export default {
       .content_center {
         margin-top: 50px;
         .center_left {
-          width: 50px;
+          width: 65px;
           height: 100%;
           vertical-align: top;
           margin-left: 10px;
@@ -324,7 +360,7 @@ export default {
       .movie_intro {
         display: inline-block;
         vertical-align: top;
-        margin-left: 30px;
+        margin-left: 15px;
       }
       .movie_intro > p {
         font-size: 12px;

@@ -58,6 +58,7 @@ export default {
         if(res.status == 200) {
           this.errorTip("登陆成功");
           setCookie("key",res.data.token,7);
+          console.log(res.data.token)
           let that = this;
           setTimeout(function() {
             that.$router.push('/index');

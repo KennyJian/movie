@@ -20,6 +20,7 @@
 <script>
 import {getCookie,setCookie} from "../../../common/utils.js"
 export default {
+  inject:['reload'],
   name: "UserInfo",
   data() {
     return {
@@ -51,6 +52,7 @@ export default {
         setCookie('key','');
         this.userImg == "../../../../static/imgs/user_default.png"
         this.$router.push('/index');
+        this.reload();
       })
     }
   },
