@@ -453,7 +453,7 @@ export default {
           "资阳"
         ]
       },
-      currentCity: "张家港"
+      currentCity: "深圳"
     };
   },
   methods: {

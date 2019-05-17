@@ -241,6 +241,7 @@ export default {
       }else{
         this.seatsName=this.seatsName.replace(",第" + row + "排" + "第" + column + "座", "");
       }
+      console.log(this.selectSeats)
       this.single[row - 1][column - 1].sold = 1;
       this.totalPrice = this.selectSingle.length * this.hallInfo.price;
     },

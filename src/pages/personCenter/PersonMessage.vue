@@ -11,8 +11,9 @@
           <!-- <input type="file"> -->
           <el-upload
           class="uploadImg"
-          action="http://www.chong10010.cn:8088/user/upload"
-          :data="headImgFile"
+          action="http://127.0.0.1:9095/user/upload"
+          :name="headImgFile"
+          :headers="headers"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -97,7 +98,9 @@
 </template>
 
 <script>
+import {getCookie} from '../../common/utils'
 export default {
+  inject:['reload'],
   data() {
     return {
       name: "", //昵称
@@ -110,7 +113,8 @@ export default {
       phone: "", //联系电话，
       email: "",
       biography: "",
-      date:''
+      date:'',
+      headImgFile:"headImgFile"
     };
   },
   methods: {
@@ -160,26 +164,34 @@ export default {
     // 上传图片
      handleAvatarSuccess(res, file) {
         this.userImg = URL.createObjectURL(file.raw);
+        this.reload();
       },
       beforeAvatarUpload(file) {
         const isLt2M = file.size / 1024 / 1024 < 1;
-
         if (!isLt2M) {
+          alert('上传头像图片大小不能超过 1MB!')
           this.$message.error('上传头像图片大小不能超过 1MB!');
         }
-        this.$api.post({
-          headImgFile:file,
-        },"/user/upload",(res) => {
-          console.log(res);
-          if(res.status == 200) {
-            alert("上传成功");
-          } else {
-            alert(res.msg)
-          }
-        })
+        // this.$api.post({
+        //   headImgFile:file,
+        // },"/user/upload",(res) => {
+        //   console.log(res);
+        //   if(res.status == 200) {
+        //     alert("上传成功");
+        //   } else {
+        //     alert(res.msg)
+        //   }
+        // })
         return  isLt2M;
       }
 
+  },
+  computed: {
+    headers(){
+      return{
+        "Authorization": "Bearer " + getCookie("key")
+      }
+    }
   },
   mounted() {
     this.getuserInfo();
